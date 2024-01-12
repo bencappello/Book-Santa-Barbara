@@ -316,8 +316,7 @@ function calculateTotalCost() {
 };
 
 //Google Calendar
-const calendarID = "reservations@booksantabarbara.com"
-const apiKey = "AIzaSyDPrCboenJFa5OmYdaZTs4bpM8BFO0-HSM"
+const calendarID = "thefactory@booksantabarbara.com"
 const googleURL = "https://www.googleapis.com/calendar/v3/calendars/" + calendarID + "/events?key=" + apiKey;
 
 var events = {};
