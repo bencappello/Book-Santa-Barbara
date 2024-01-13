@@ -1,5 +1,9 @@
 const calendarID = "thefactory@booksantabarbara.com"
 
+function dom(id) {
+    return document.getElementById(id);
+};
+
 //Form Sections
 var guestsSlider = dom("guests-slider");
 var guestsInput = dom("guest-count-input");
