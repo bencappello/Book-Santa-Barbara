@@ -3,6 +3,8 @@ function dom(id) {
     return document.getElementById(id);
 };
 
+const calendarID = "thefactory@booksantabarbara.com"
+
 //Form Sections
 var guestsSlider = dom("guests-slider");
 var guestsInput = dom("guest-count-input");
@@ -316,7 +318,7 @@ function calculateTotalCost() {
 };
 
 //Google Calendar
-const calendarID = "thefactory@booksantabarbara.com"
+
 const googleURL = "https://www.googleapis.com/calendar/v3/calendars/" + calendarID + "/events?key=" + apiKey;
 
 var events = {};
