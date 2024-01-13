@@ -5,6 +5,11 @@ function dom(id) {
 };
 
 //Form Sections
+//event info
+var eventNameInput = dom("event-name-input");
+var eventDateInput = dom("event-date-input");
+var startTimeInput = dom("start-time-input");
+var endTimeInput = dom("end-time-input");
 var guestsSlider = dom("guests-slider");
 var guestsInput = dom("guest-count-input");
 
@@ -24,10 +29,20 @@ var stationAppetizers = dom("station-appetizers");
 var passedSavoryAppetizers = dom("passed-savory-appetizers");
 var passedDesserts = dom("passed-desserts");
 
-//Cost Summary
+
+//Event Summary
+var dateLineItem = dom("date-line-item");
+var startLineItem = dom("start-line-item");
+var endLineItem = dom("end-line-item");
 var guestsLineItem = dom("guests-line-item");
+
+var eventNameDisplay = dom("event-name-display");
+var eventDateDisplay = dom("event-date-display");
+var startTimeDisplay = dom("start-time-display");
+var endTimeDisplay = dom("end-time-display");
 var guestCountDisplay = dom("guest-count-display");
 
+//Cost Summary
 var foodMinDisplay = dom("food-min-display");
 var foodMinInput = dom("food-min-input");
 
