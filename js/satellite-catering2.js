@@ -3,6 +3,13 @@ function dom(id) {
     return document.getElementById(id);
 };
 
+var eventNameInput = dom("event-name-input");
+var eventDateInput = dom("event-date-input");
+var startTimeInput = dom("start-time-input");
+var endTimeInput = dom("end-time-input");
+var guestsSlider = dom("guests-slider");
+var guestsInput = dom("guest-count-input");
+
 //Form Sections
 var guestsSlider = dom("guests-slider");
 var guestsInput = dom("guest-count-input");
@@ -316,7 +323,7 @@ function calculateTotalCost() {
 };
 
 //Google Calendar
-const calendarID = "thefactory@booksantabarbara.com"
+const calendarID = "c_1883pm1dfe5o2ittjte4j7c5t2e5e@resource.calendar.google.com"
 const googleURL = "https://www.googleapis.com/calendar/v3/calendars/" + calendarID + "/events?key=" + apiKey;
 
 var events = {};

@@ -316,7 +316,7 @@ function calculateTotalCost() {
 };
 
 //Google Calendar
-const calendarID = "reservations@booksantabarbara.com"
+const calendarID = "c_1883pm1dfe5o2ittjte4j7c5t2e5e@resource.calendar.google.com"
 const googleURL = "https://www.googleapis.com/calendar/v3/calendars/" + calendarID + "/events?key=" + apiKey;
 
 var events = {};
