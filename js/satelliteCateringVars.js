@@ -23,7 +23,7 @@ var oddsEndsInput = dom("odds-and-ends");
 //A la carte
 var stationAppetizersInput = dom("station-appetizers-input");
 var passedSavoryAppetizersInput = dom("passed-savory-appetizers-input");
-var passedDessertsInput = dom("passed-desserts");
+var passedDessertsInput = dom("passed-desserts-input");
 
 var stationAppetizers = dom("station-appetizers");
 var passedSavoryAppetizers = dom("passed-savory-appetizers-input");
