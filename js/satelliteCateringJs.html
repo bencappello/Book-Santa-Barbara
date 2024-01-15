@@ -1,13 +1,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js" integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/timepicker@1.14.1/jquery.timepicker.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/bencappello/book-santa-barbara@main/js/satelliteCateringVars3.js?v=11"></script>
+<script src="https://cdn.jsdelivr.net/gh/bencappello/book-santa-barbara@main/js/satelliteCateringVars4.js?v=11"></script>
 <script>
 
 //set defaults
 //inputs
-passedSavoryAppetizers.hidden = true
-passedDesserts.hidden = true
 guestsSlider.value = 0;
 guestsInput.value = 0;
 
@@ -22,7 +20,10 @@ guestsLineItem.style.display = 'none';
 breadCostLineItem.style.display = 'none';
 oddsEndsCostLineItem.style.display = 'none';
 dinnerCostLineItem.style.display = 'none';
-aLaCarteCostLineItem.style.display = 'none';
+stationAppetizersCostLineItem.style.display = 'none';
+passedSavoryAppetizersCostLineItem.style.display = 'none';
+passedDessertsCostLineItem.style.display = 'none';
+
 dessertCostLineItem.style.display = 'none';
 drinksCostLineItem.style.display = 'none';
 
@@ -232,39 +233,65 @@ function calculateOddsEndsCost() {
   };
 };
 
-function calculateALaCarteCost() {
-
+function calculateStationAppetizersCost() {
   if (stationAppetizersInput.checked === true) {
-    aLaCarteCostLineItem.style.display = 'flex';
-    aLaCarteSelectionDisplay.innerText = "Station Appetizers";
-    aLaCarteCostDisplay.innerHTML = "$30 per";
-    aLaCarteCostInput = 30;
+    stationAppetizersCostLineItem.style.display = 'flex';
+    stationAppetizersSelectionDisplay.innerText = "Station Appetizers";
+    stationAppetizersCostDisplay.innerHTML = "$30 per";
+    stationAppetizersCostInput = 30;
     return 30;
-  } else if (passedSavoryAppetizersInput.checked === true) {
-    aLaCarteCostLineItem.style.display = 'flex';
-    aLaCarteSelectionDisplay.innerText = "Passed Savory Appetizers";
-    aLaCarteCostDisplay.innerHTML = "$35 per";
-    aLaCarteCostInput = 35;
-    return 35;
-  } else if (passedDessertsInput.checked === true) {
-    aLaCarteCostLineItem.style.display = 'flex';
-    aLaCarteSelectionDisplay.innerText = "Passed Desserts";
-    aLaCarteCostDisplay.innerHTML = "$14 per";
-    aLaCarteCostInput = 14;
-    return 14;
   } else {
-    aLaCarteCostLineItem.style.display = 'none';
-    aLaCarteCostInput = 0;
+    stationAppetizersCostLineItem.style.display = 'none';
+    stationAppetizersCostInput = 0;
     return 0;
   };
 };
+
+function calculatePassedSavoryAppetizersCost() {
+  if (passedSavoryAppetizersInput.checked === true) {
+    passedSavoryAppetizersCostLineItem.style.display = 'flex';
+    passedSavoryAppetizersSelectionDisplay.innerText = "Passed Savory Appetizers";
+    passedSavoryAppetizersCostDisplay.innerHTML = "$35 per";
+    passedSavoryAppetizersCostInput = 35;
+    return 35;
+  } else {
+    passedSavoryAppetizersCostLineItem.style.display = 'none';
+    passedSavoryAppetizersCostInput = 0;
+    return 0;
+  };
+};
+
+function calculatePassedDessertsCost() {
+  if (passedDessertsInput.checked === true) {
+    passedDessertsCostLineItem.style.display = 'flex';
+    passedDessertsSelectionDisplay.innerText = "Passed Desserts";
+    passedDessertsCostDisplay.innerHTML = "$14 per";
+    passedDessertsCostInput = 14;
+    return 14;
+  }  else {
+    passedDessertsCostLineItem.style.display = 'none';
+    passedDessertsCostInput = 0;
+    return 0;
+  };
+};
+
+
+  if (passedDessertsInput.checked === true) {
+    passedDessertsCostLineItem.style.display = 'flex';
+    passedDessertsSelectionDisplay.innerText = "Passed Desserts";
+    passedDessertsCostDisplay.innerHTML = "$14 per";
+    passedDessertsCostInput = 14;
+    totalCost += 14;
+  } 
 
 function calculateTotalCost() {
     return (
         calculateDinnerCost() + 
         calculateBreadCost() + 
         calculateOddsEndsCost() + 
-        calculateALaCarteCost()
+        calculateStationAppetizersCost() +
+        calculatePassedSavoryAppetizersCost() +
+        calculatePassedDessertsCost()
     ) * Number(guestsInput.value);
 };
 </script>
