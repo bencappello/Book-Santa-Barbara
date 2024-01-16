@@ -96,3 +96,52 @@ var totalCostInput = dom("total-cost-input");
 
 var depositDisplay = dom("deposit-display");
 var depositInput = dom("deposit-input");
+
+//set defaults
+//inputs
+guestsSlider.value = 0;
+guestsInput.value = 0;
+
+//event details
+eventNameDisplay.hidden = true;
+dateLineItem.style.display = 'none';
+startLineItem.style.display = 'none';
+endLineItem.style.display = 'none';
+guestsLineItem.style.display = 'none';
+
+//cost details
+breadCostLineItem.style.display = 'none';
+oddsEndsCostLineItem.style.display = 'none';
+dinnerCostLineItem.style.display = 'none';
+stationAppetizersCostLineItem.style.display = 'none';
+passedSavoryAppetizersCostLineItem.style.display = 'none';
+passedDessertsCostLineItem.style.display = 'none';
+lunchCostLineItem.style.display = 'none';
+
+openBarCostLineItem.style.display = 'none';
+staffedBarCostLineItem.style.display = 'none';
+
+//total details
+foodMinDisplay.innerHTML = "$0";
+totalCostDisplay.innerHTML = "$0" 
+depositDisplay.innerHTML = "$0";
+
+//onchange
+guestsSlider.oninput = calculateChange;
+guestsSlider.onchange = calculateChange;
+guestsInput.onchange = calculateChange;
+
+buffetInput.oninput = onBuffetInput;
+familyInput.oninput = onFamilyInput;
+platedInput.oninput = onPlatedInput;
+
+document.getElementsByName('bread-service').forEach(function(el) {
+    el.oninput = onBreadInput;
+});
+document.getElementsByName('odds-and-ends').forEach(function(el) {
+    el.oninput = onOddsEndsInput;
+});
+
+stationAppetizersInput.oninput = calculateChange;
+passedSavoryAppetizersInput.oninput = calculateChange;
+passedDessertsInput.oninput = calculateChange;

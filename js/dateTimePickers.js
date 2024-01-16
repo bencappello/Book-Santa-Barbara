@@ -88,6 +88,7 @@ function dayAvailable(date) {
 //TIMEPICKER
 var startTime = $('input#start-time-input');
 var endTime = $('input#end-time-input');
+var eventLength = 0;
 
 startTime.timepicker({
   'step': () => 60,
