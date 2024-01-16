@@ -1,13 +1,13 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js" integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/timepicker@1.14.1/jquery.timepicker.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/bencappello/book-santa-barbara@main/js/satelliteCateringVarsDefaults3.js?v=11"></script>
+<script src="https://cdn.jsdelivr.net/gh/bencappello/book-santa-barbara@main/js/satelliteCateringVarsDefaults4.js?v=11"></script>
 <script src="https://cdn.jsdelivr.net/gh/bencappello/book-santa-barbara/js/dateTimePickers.js?"></script>
 <script>
 
 //onchange
-startTime.oninput = calculateChange;
-endTime.oninput = calculateChange;
+startTimeInput.onchange = calculateChange;
+endTimeInput.onchange = calculateChange;
 guestsSlider.oninput = calculateChange;
 guestsSlider.onchange = calculateChange;
 guestsInput.onchange = calculateChange;
@@ -16,10 +16,10 @@ buffetInput.oninput = onBuffetInput;
 familyInput.oninput = onFamilyInput;
 platedInput.oninput = onPlatedInput;
 
-document.getElementsByName('bread-service').forEach(function(el) {
+document.getElementsByName('bread-input').forEach(function(el) {
     el.oninput = onBreadInput;
 });
-document.getElementsByName('odds-and-ends').forEach(function(el) {
+document.getElementsByName('odds-ends-input').forEach(function(el) {
     el.oninput = onOddsEndsInput;
 });
 
@@ -29,8 +29,8 @@ passedDessertsInput.oninput = calculateChange;
 
 lunchInput.onchange = calculateChange;
 
-guestsInput.onchange = calculateChange;
-guestsInput.onchange = calculateChange;
+openBarInput.onchange = calculateChange;
+staffedBarInput.onchange = calculateChange;
 
 //Calculation
 function calculateChange() {
@@ -103,11 +103,11 @@ function onPlatedInput() {
 }
 function onBreadInput() {
     if (this.checked === true) {
-        document.getElementsByName('bread-service').forEach(function(el) {
+        document.getElementsByName('bread-input').forEach(function(el) {
             el.checked = true;
         });
     } else {
-        document.getElementsByName('bread-service').forEach(function(el) {
+        document.getElementsByName('bread-input').forEach(function(el) {
             el.checked = false;
         });
     };
@@ -116,11 +116,11 @@ function onBreadInput() {
 }
 function onOddsEndsInput() {
     if (this.checked === true) {
-        document.getElementsByName('odds-and-ends').forEach(function(el) {
+        document.getElementsByName('odds-ends-input').forEach(function(el) {
             el.checked = true;
         });
     } else {
-        document.getElementsByName('odds-and-ends').forEach(function(el) {
+        document.getElementsByName('odds-ends-input').forEach(function(el) {
             el.checked = false;
         });
     };
@@ -159,7 +159,7 @@ function calculateDinnerCost() {
     dinnerCostLineItem.style.display = 'flex';
     dinnerSelectionDisplay.innerText = "Serviced Buffet Dinner";
     dinnerCostDisplay.innerHTML = "$60 per";
-    dinnerCostInput = 60;
+    dinnerCostInput.value = 60;
     return 60;
   } else if (familyInput.checked === true) {
     buffetInput.checked = false;
@@ -167,7 +167,7 @@ function calculateDinnerCost() {
     dinnerCostLineItem.style.display = 'flex';
     dinnerSelectionDisplay.innerText = "Seated Family Style Dinner";
     dinnerCostDisplay.innerHTML = "$70 per";
-    dinnerCostInput = 70;
+    dinnerCostInput.value = 70;
     return 70;
   } else if (platedInput.checked === true) {
     buffetInput.checked = false;
@@ -175,39 +175,11 @@ function calculateDinnerCost() {
     dinnerCostLineItem.style.display = 'flex';
     dinnerSelectionDisplay.innerText = "Seated Plated Dinner";
     dinnerCostDisplay.innerHTML = "$80 per";
-    dinnerCostInput = 80;
+    dinnerCostInput.value = 80;
     return 80;
   } else {
     dinnerCostLineItem.style.display = 'none';
-    dinnerCostInput = 0;
-    return 0;
-  };
-};
-
-function calculateBreadCost() {
-  if (breadInput.checked === true) {
-    breadCostLineItem.style.display = 'flex';
-    breadSelectionDisplay.innerText = "Bread Service";
-    breadCostDisplay.innerHTML = "$7 per";
-    breadCostInput = 7;
-    return 7;
-  } else {
-    breadCostLineItem.style.display = 'none';
-    breadCostInput = 0;
-    return 0;
-  };
-};
-
-function calculateOddsEndsCost() {
-  if (oddsEndsInput.checked === true) {
-    oddsEndsCostLineItem.style.display = 'flex';
-    oddsEndsSelectionDisplay.innerText = "Odds & Ends";
-    oddsEndsCostDisplay.innerHTML = "$8 per";
-    oddsEndsCostInput = 8;
-    return 8;
-  } else {
-    oddsEndsCostLineItem.style.display = 'none';
-    oddsEndsCostInput = 0;
+    dinnerCostInput.value = 0;
     return 0;
   };
 };
@@ -217,11 +189,11 @@ function calculateStationAppetizersCost() {
     stationAppetizersCostLineItem.style.display = 'flex';
     stationAppetizersSelectionDisplay.innerText = "Station Appetizers";
     stationAppetizersCostDisplay.innerHTML = "$30 per";
-    stationAppetizersCostInput = 30;
+    stationAppetizersCostInput.value = 30;
     return 30;
   } else {
     stationAppetizersCostLineItem.style.display = 'none';
-    stationAppetizersCostInput = 0;
+    stationAppetizersCostInput.value = 0;
     return 0;
   };
 };
@@ -231,11 +203,11 @@ function calculatePassedSavoryAppetizersCost() {
     passedSavoryAppetizersCostLineItem.style.display = 'flex';
     passedSavoryAppetizersSelectionDisplay.innerText = "Passed Savory Appetizers";
     passedSavoryAppetizersCostDisplay.innerHTML = "$35 per";
-    passedSavoryAppetizersCostInput = 35;
+    passedSavoryAppetizersCostInput.value = 35;
     return 35;
   } else {
     passedSavoryAppetizersCostLineItem.style.display = 'none';
-    passedSavoryAppetizersCostInput = 0;
+    passedSavoryAppetizersCostInput.value = 0;
     return 0;
   };
 };
@@ -245,11 +217,11 @@ function calculatePassedDessertsCost() {
     passedDessertsCostLineItem.style.display = 'flex';
     passedDessertsSelectionDisplay.innerText = "Passed Desserts";
     passedDessertsCostDisplay.innerHTML = "$14 per";
-    passedDessertsCostInput = 14;
+    passedDessertsCostInput.value = 14;
     return 14;
   }  else {
     passedDessertsCostLineItem.style.display = 'none';
-    passedDessertsCostInput = 0;
+    passedDessertsCostInput.value = 0;
     return 0;
   };
 };
@@ -259,11 +231,11 @@ function calculateLunchCost() {
     lunchCostLineItem.style.display = 'flex';
     lunchSelectionDisplay.innerText = "Lunch";
     lunchCostDisplay.innerHTML = "$25 per";
-    lunchCostInput = 25;
+    lunchCostInput.value = 25;
     return 25;
   }  else {
     lunchCostLineItem.style.display = 'none';
-    lunchCostInput = 0;
+    lunchCostInput.value = 0;
     return 0;
   };
 };
@@ -279,16 +251,16 @@ function calculateOpenBarCost() {
         eventLength = endTime.timepicker('getTime').getHours() - startTime.timepicker('getTime').getHours();
         cost = ((eventLength * 15) + 15) * guestsInput.value;
         openBarCostDisplay.innerHTML = "$" + cost;
-        openBarCostInput = cost;
+        openBarCostInput.value = cost;
         return cost;
     } else {
         openBarCostDisplay.innerHTML = 'select event hours'
-        openBarCostInput = 0;
+        openBarCostInput.value = 0;
         return 0
     }
   }  else {
     openBarCostLineItem.style.display = 'none';
-    openBarCostInput = 0;
+    openBarCostInput.value = 0;
     return 0;
   };
 };
@@ -298,24 +270,42 @@ function calculateStaffedbarCost() {
     staffedbarCostLineItem.style.display = 'flex';
     staffedbarSelectionDisplay.innerText = "Passed Desserts";
     staffedbarCostDisplay.innerHTML = "$14 per";
-    staffedbarCostInput = 14;
+    staffedbarCostInput.value = 14;
     return 14;
   }  else {
     staffedbarCostLineItem.style.display = 'none';
-    staffedbarCostInput = 0;
+    staffedbarCostInput.value = 0;
     return 0;
   };
 };
 
+function calculateCost(id, lineName, unitCost) {
+    var cost = unitCost * guestsInput.value;
+
+    console.log('dom(id+"-input")', dom(id+"-input"));
+
+    if (dom(id+"-input").checked === true) {
+        dom(id+"-line-item").style.display = 'flex';
+        dom(id+"-selection-display").innerText = lineName;
+        dom(id+"-cost-display").innerHTML = "$" + cost;
+        dom(id+"-cost-input").value = cost;
+        return cost;
+    } else {
+        dom(id+"-line-item").style.display = 'none';
+        dom(id+"-cost-input").value = 0;
+        return 0;
+    };
+}
+
 function calculateTotalCost() {
-    return (
+    return ((
         calculateDinnerCost() + 
-        calculateBreadCost() + 
-        calculateOddsEndsCost() + 
+        calculateCost('bread', "Bread Service", 7) + 
+        calculateCost('odds-ends', "Odds & Ends", 8) + 
         calculateStationAppetizersCost() +
         calculatePassedSavoryAppetizersCost() +
         calculatePassedDessertsCost() +
         calculateLunchCost()
-    ) * Number(guestsInput.value);
+    ) * Number(guestsInput.value)) + calculateOpenBarCost();
 };
 </script>
