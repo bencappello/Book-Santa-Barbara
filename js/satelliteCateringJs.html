@@ -1,7 +1,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js" integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/timepicker@1.14.1/jquery.timepicker.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/bencappello/book-santa-barbara@main/js/satelliteCateringVarsDefaults5.js?v=11"></script>
+<script src="https://cdn.jsdelivr.net/gh/bencappello/book-santa-barbara@main/js/satelliteCateringVarsDefaults7.js?v=11"></script>
 <script src="https://cdn.jsdelivr.net/gh/bencappello/book-santa-barbara/js/dateTimePickers.js?"></script>
 <script>
 
@@ -37,7 +37,6 @@ function calculateChange() {
     console.log("calculateChange");
 
   var eventDateObject = new Date(eventDateInput.value);
-  var foodMinLineItem = calculateFoodMinLineItem();
   var totalCost = calculateTotalCost();
 
   guestsInput.value = guestsSlider.value;
@@ -64,12 +63,6 @@ function calculateChange() {
   };
 
   //cost updating
-
-  if (typeof foodMinLineItem === 'number') {
-    foodMinDisplay.innerHTML = "$" + foodMinLineItem.toString();
-  } else {
-    foodMinDisplay.innerHTML = foodMinLineItem.toString();
-  }
 
   totalCostDisplay.innerHTML = "$" + totalCost.toString();
   totalCostInput.value = totalCost;
@@ -131,26 +124,6 @@ function onOddsEndsInput() {
 function calculateDeposit(total) {
   return total * 0.2;
 }
-
-function calculateFoodMinLineItem() {
-  if (guestsSlider.value > 200) {
-    return 'Inquire';
-  } else {
-    return calculateFoodMin();
-  }
-};
-
-function calculateFoodMin() {
-  if (guestsSlider.value <= 50) {
-    return 5000;
-  } else if (guestsSlider.value <= 100) {
-    return 7000;
-  } else if (guestsSlider.value <= 150) {
-    return 8500;
-  } else {
-    return 10000;
-  };
-};
 
 function calculateDinnerCost() {
   var cost;

@@ -1,0 +1,85 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js" integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/timepicker@1.14.1/jquery.timepicker.min.js"></script>
+
+<script>
+//event details
+function dom(id) {
+    return document.getElementById(id);
+};
+
+const calendarID = "thefactory@booksantabarbara.com"
+
+//event info
+var eventNameInput = dom("event-name-input");
+var eventDateInput = dom("event-date-input");
+var startTimeInput = dom("start-time-input");
+var endTimeInput = dom("end-time-input");
+var guestsSlider = dom("guests-slider");
+var guestsInput = dom("guest-count-input");
+
+//Event Summary
+var dateLineItem = dom("date-line-item");
+var startLineItem = dom("start-line-item");
+var endLineItem = dom("end-line-item");
+var guestsLineItem = dom("guests-line-item");
+
+var eventNameDisplay = dom("event-name-display");
+var eventDateDisplay = dom("event-date-display");
+var startTimeDisplay = dom("start-time-display");
+var endTimeDisplay = dom("end-time-display");
+var guestCountDisplay = dom("guest-count-display");
+
+//set defaults
+guestsSlider.value = 0;
+guestsInput.value = 0;
+
+eventNameDisplay.hidden = true;
+dateLineItem.style.display = 'none';
+startLineItem.style.display = 'none';
+endLineItem.style.display = 'none';
+guestsLineItem.style.display = 'none';
+
+//Calculation
+function calculateChange() {
+  var eventDateObject = new Date(eventDateInput.value);
+
+  guestsInput.value = guestsSlider.value;
+  
+  //event details updating
+  if (eventNameInput.value) { 
+    eventNameDisplay.hidden = false;
+    eventNameDisplay.innerHTML = eventNameInput.value;
+  };
+  if (eventDateInput.value) { 
+    dateLineItem.style.display = 'flex';
+    eventDateDisplay.innerHTML = eventDateObject.toLocaleString("en-US", {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric'
+    });
+  };
+  if (startTimeInput.value) { 
+    startLineItem.style.display = 'flex';
+    startTimeDisplay.innerHTML = startTimeInput.value.replace(":00", ":00 ");
+  };
+  if (endTimeInput.value) { 
+    endLineItem.style.display = 'flex';
+    endTimeDisplay.innerHTML = endTimeInput.value.replace(":00", ":00 ");
+  };
+  if (guestsInput.value && guestsInput.value !== '0') { 
+    guestsLineItem.style.display = 'flex';
+    guestCountDisplay.innerHTML = guestsInput.value;
+  };
+};
+
+eventNameInput.onchange = calculateChange;
+eventDateInput.onchange = calculateChange;
+startTimeInput.onchange = calculateChange;
+endTimeInput.onchange = calculateChange;
+guestsSlider.oninput = calculateChange;
+guestsSlider.onchange = calculateChange;
+guestsInput.onchange = calculateChange;
+</script>
+<script src="https://cdn.jsdelivr.net/gh/bencappello/book-santa-barbara/js
+/dateTimePickers.js?"></script>
