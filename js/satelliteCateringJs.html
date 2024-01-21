@@ -1,7 +1,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js" integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/timepicker@1.14.1/jquery.timepicker.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/bencappello/book-santa-barbara@main/js/satelliteCateringVarsDefaults10.js?v=11"></script>
+<script src="https://cdn.jsdelivr.net/gh/bencappello/book-santa-barbara@main/js/satelliteCateringVarsDefaults11.js?v=11"></script>
 <script src="https://cdn.jsdelivr.net/gh/bencappello/book-santa-barbara/js/dateTimePickers.js?"></script>
 <script>
 
@@ -11,6 +11,7 @@ endTimeInput.onchange = calculateChange;
 guestsSlider.oninput = calculateChange;
 guestsSlider.onchange = calculateChange;
 guestsInput.onchange = calculateChange;
+barTimeSlider.oninput = calculateChange;
 barTimeSlider.onchange = calculateChange;
 barTimeInput.onchange = calculateChange;
 
@@ -67,7 +68,7 @@ function calculateChange() {
   };
   if (barTimeInput.value && barTimeInput.value !== '0') { 
     barTimeLineItem.style.display = 'flex';
-    barTimeDisplay.innerHTML = barTimeInput.value;
+    barTimeDisplay.innerHTML = barTimeInput.value + ' hrs';
   };
 
   //cost updating
@@ -171,20 +172,19 @@ function calculateDinnerCost() {
 };
 
 function calculateOpenBarCost() {
-    var cost;
+    var barCost;
 
   if (openBarInput.checked === true) {
     openBarCostLineItem.style.display = 'flex';
     openBarSelectionDisplay.innerText = "Open bar";
 
-    if (barTimeInput.value) {
-        eventLength = endTime.timepicker('getTime').getHours() - startTime.timepicker('getTime').getHours();
-        cost = ((eventLength * 15) + 15) * guestsInput.value;
-        openBarCostDisplay.innerHTML = "$" + cost;
-        openBarCostInput.value = cost;
-        return cost;
+    if (barTimeInput.value != 0) {
+        barCost = ((barTimeInput.value * 15) + 15) * guestsInput.value;
+        openBarCostDisplay.innerHTML = "$" + barCost;
+        openBarCostInput.value = barCost;
+        return barCost;
     } else {
-        openBarCostDisplay.innerHTML = 'select event hours'
+        openBarCostDisplay.innerHTML = 'select bar hours'
         openBarCostInput.value = 0;
         return 0
     }
@@ -196,17 +196,30 @@ function calculateOpenBarCost() {
 };
 
 function calculateStaffedbarCost() {
-  if (staffedbarInput.checked === true) {
-    staffedbarCostLineItem.style.display = 'flex';
-    staffedbarSelectionDisplay.innerText = "Passed Desserts";
-    staffedbarCostDisplay.innerHTML = "$14 per";
-    staffedbarCostInput.value = 14;
-    return 14;
-  }  else {
-    staffedbarCostLineItem.style.display = 'none';
-    staffedbarCostInput.value = 0;
-    return 0;
-  };
+  var barCost;
+  var bartenders = Math.floor((guestsInput.value - 1) / 20) + 1;
+
+if (staffedBarInput.checked === true) {
+  staffedBarCostLineItem.style.display = 'flex';
+  staffedBarSelectionDisplay.innerText = "Open bar";
+
+  if (barTimeInput.value != 0) {
+    console.log('barTimeInput.value', barTimeInput.value)
+
+      barCost = barTimeInput.value * 50 * bartenders;
+      staffedBarCostDisplay.innerHTML = "$" + barCost;
+      staffedBarCostInput.value = barCost;
+      return barCost;
+  } else {
+      staffedBarCostDisplay.innerHTML = 'select bar hours'
+      staffedBarCostInput.value = 0;
+      return 0
+  }
+}  else {
+  staffedBarCostLineItem.style.display = 'none';
+  staffedBarCostInput.value = 0;
+  return 0;
+};
 };
 
 function calculateCost(id, lineName, unitCost) {
