@@ -65,6 +65,10 @@ function calculateChange() {
     guestsLineItem.style.display = 'flex';
     guestCountDisplay.innerHTML = guestsInput.value;
   };
+  if (barTimeInput.value && barTimeInput.value !== '0') { 
+    barTimeLineItem.style.display = 'flex';
+    barTimeDisplay.innerHTML = barTimeInput.value;
+  };
 
   //cost updating
 
