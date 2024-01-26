@@ -106,31 +106,19 @@ var depositDisplay = dom("deposit-display");
 var depositInput = dom("deposit-input");
 
 //set defaults
-eventNameDisplay.hidden = true;
-eventNameDisplay.innerHTML = eventNameInput.value;
-
-dateLineItem.style.display = 'none';
-eventDateDisplay.innerHTML = eventDateObject.toLocaleString("en-US", {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric'
-});
-
-startLineItem.style.display = 'none';
-startTimeDisplay.innerHTML = startTimeInput.value.replace(":00", ":00 ");
-
-endLineItem.style.display = 'none';
-endTimeDisplay.innerHTML = endTimeInput.value.replace(":00", ":00 ");
-
+//inputs
 guestsSlider.value = 0;
 guestsInput.value = 0;
-guestsLineItem.style.display = 'none';
-guestCountDisplay.innerHTML = guestsSlider.value;
-
 barTimeSlider.value = 0;
 barTimeInput.value = 0;
+
+//event details
+eventNameDisplay.hidden = true;
+dateLineItem.style.display = 'none';
+startLineItem.style.display = 'none';
+endLineItem.style.display = 'none';
+guestsLineItem.style.display = 'none';
 barTimeLineItem.style.display = 'none';
-barTimeDisplay.innerHTML = barTimeInput.value + ' hrs';
 
 //cost details
 breadCostLineItem.style.display = 'none';
