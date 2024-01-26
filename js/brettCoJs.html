@@ -1,32 +1,147 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js" integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/timepicker@1.14.1/jquery.timepicker.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/bencappello/book-santa-barbara@main/js/brettCoVarsDefaults3.js?v=11"></script>
+<script src="https://cdn.jsdelivr.net/gh/bencappello/book-santa-barbara@main/js/brettCoVarsDefaults4.js?v=11"></script>
 <script src="https://cdn.jsdelivr.net/gh/bencappello/book-santa-barbara/js/dateTimePickers.js?"></script>
 <script>
 
 //onchange
 brettCoRequestForm.onchange = calculateChange;
-// eventNameInput.onchange = calculateChange;
-// eventDateInput.onchange = calculateChange;
-// startTimeInput.onchange = calculateChange;
-// endTimeInput.onchange = calculateChange;
-// guestsSlider.oninput = calculateChange;
-// guestsSlider.onchange = calculateChange;
-// guestsInput.onchange = calculateChange;
-// barTimeSlider.oninput = calculateChange;
-// barTimeSlider.onchange = calculateChange;
-// barTimeInput.onchange = calculateChange;
-
-
-
+brettCoRequestForm.oninput = calculateChange;
 
 //Calculation
 function calculateChange() {
     console.log("calculateChange");
 
-  
+    var eventDateObject = new Date(eventDateInput.value);
+    var totalCost = calculateTotalCost();
+
+    updateDisplay("customSongs");
+    updateDisplay("cocktailAddedTime");
+    updateDisplay("dinnerAddedTime");
+    updateDisplay("horns");
+    updateDisplay("djAddedTime");
+    updateDisplay("djLiveDances");
+    updateDisplay("bandAddedPlayers");
+    updateDisplay("bandAddedTime");
+    updateDisplay("numberOfHeadphones");
+
+    // customSongsInput.value = customSongsSlider.value;
+    // cocktailAddedTimeInput.value = cocktailAddedTimeSlider.value;
+    // dinnerAddedTimeInput.value = dinnerAddedTimeSlider.value;
+    // hornsInput.value = hornsSlider.value;
+    // djAddedTimeInput.value = djAddedTimeSlider.value;
+    // djLiveDancesInput.value = djLiveDancesSlider.value;
+    // addedPlayersInput.value = addedPlayersSlider.value;
+    // bandAddedTimeInput.value = bandAddedTimeSlider.value;
+    // numberOfHeadphonesInput.value = numberOfHeadphonesSlider.value;
+
+
+    //EVENT INFO
+    if (eventNameInput.value) { 
+        eventNameDisplay.hidden = false;
+        eventNameDisplay.innerHTML = eventNameInput.value;
+    };
+    if (eventDateInput.value) { 
+        dateLineItem.style.display = 'flex';
+        eventDateDisplay.innerHTML = eventDateObject.toLocaleString("en-US", {
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric'
+        });
+    };
+    if (startTimeInput.value) { 
+        startLineItem.style.display = 'flex';
+        startTimeDisplay.innerHTML = startTimeInput.value.replace(":00", ":00 ");
+    };
+    if (endTimeInput.value) { 
+        endLineItem.style.display = 'flex';
+        endTimeDisplay.innerHTML = endTimeInput.value.replace(":00", ":00 ");
+    };
+
+    if (customSongsSlider.value && customSongsSlider.value !== '0') { 
+        customSongsLineItem.style.display = 'flex';
+        customSongsDisplay.innerHTML = customSongsSlider.value;
+    } else {
+        customSongsDisplay.innerHTML = customSongsSlider.value;
+    };
+
+    // if (cocktailAddedTimeSlider.value && cocktailAddedTimeSlider.value !== '0') { 
+    //     cocktailAddedTimeLineItem.style.display = 'flex';
+    //     cocktailAddedTimeDisplay.innerHTML = cocktailAddedTimeSlider.value;
+    // } else {
+    //     cocktailAddedTimeDisplay.innerHTML = cocktailAddedTimeSlider.value;
+    // };
+
+    // if (dinnerAddedTimeSlider.value && dinnerAddedTimeSlider.value !== '0') { 
+    //     dinnerAddedTimeLineItem.style.display = 'flex';
+    //     dinnerAddedTimeDisplay.innerHTML = dinnerAddedTimeSlider.value;
+    // } else {
+    //     dinnerAddedTimeDisplay.innerHTML = dinnerAddedTimeSlider.value;
+    // };
+
+    // if (hornsSlider.value && hornsSlider.value !== '0') { 
+    //     hornsLineItem.style.display = 'flex';
+    //     hornsDisplay.innerHTML = hornsSlider.value;
+    // } else {
+    //     hornsDisplay.innerHTML = hornsSlider.value;
+    // };
+
+    // if (djAddedTimeSlider.value && djAddedTimeSlider.value !== '0') { 
+    //     djAddedTimeLineItem.style.display = 'flex';
+    //     djAddedTimeDisplay.innerHTML = djAddedTimeSlider.value;
+    // } else {
+    //     djAddedTimeDisplay.innerHTML = djAddedTimeSlider.value;
+    // };
+
+    // if (djLiveDancesSlider.value && djLiveDancesSlider.value !== '0') { 
+    //     djLiveDancesLineItem.style.display = 'flex';
+    //     djLiveDancesDisplay.innerHTML = djLiveDancesSlider.value;
+    // } else {
+    //     djLiveDancesDisplay.innerHTML = djLiveDancesSlider.value;
+    // };
+
+    // if (bandAddedPlayersSlider.value && bandAddedPlayersSlider.value !== '0') { 
+    //     bandAddedPlayersLineItem.style.display = 'flex';
+    //     bandAddedPlayersDisplay.innerHTML = bandAddedPlayersSlider.value;
+    // } else {
+    //     bandAddedPlayersDisplay.innerHTML = bandAddedPlayersSlider.value;
+    // };
+
+    // if (bandAddedTimeSlider.value && bandAddedTimeSlider.value !== '0') { 
+    //     bandAddedTimeLineItem.style.display = 'flex';
+    //     bandAddedTimeDisplay.innerHTML = bandAddedTimeSlider.value;
+    // } else {
+    //     bandAddedTimeDisplay.innerHTML = bandAddedTimeSlider.value;
+    // };
+
+    // if (numberOfHeadphonesSlider.value && numberOfHeadphonesSlider.value !== '0') { 
+    //     numberOfHeadphonesLineItem.style.display = 'flex';
+    //     numberOfHeadphonesDisplay.innerHTML = numberOfHeadphonesSlider.value;
+    // } else {
+    //     numberOfHeadphonesDisplay.innerHTML = numberOfHeadphonesSlider.value;
+    // };
+
+
+
+
 };
 
+function updateDisplay(prefix) {
+    var slider = eval(prefix + "Slider");
+    var lineItem = eval(prefix + "LineItem");
+    var display = eval(prefix + "Display");
 
+    eval(prefix + "Input.value = " + prefix + "Slider.value;");
+    
+    if (slider.value && slider.value !== '0') { 
+        lineItem.style.display = 'flex';
+        display.innerHTML = slider.value;
+    } else {
+        display.innerHTML = slider.value;
+    }
+}
+
+function calculateTotalCost() {
+};
 </script>

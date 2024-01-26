@@ -7,6 +7,64 @@ function dom(id) {
 //Form Sections
 var brettCoRequestForm = dom("brett-co-request-form");
 
+//checkboxes
+var ceremony = dom("ceremony");
+var ceremonySound = dom("ceremony-sound");
+var remotePower = dom("remote-power");
+var customSongs = dom("custom-songs");
+var beachCeremony = dom("beach-ceremony");
+var cocktailHour = dom("cocktail-hour");
+var trio = dom("trio");
+var fullBand = dom("full-band");
+var cocktailAddedTime = dom("cocktail-added-time");
+var dinner = dom("dinner");
+var playlist = dom("playlist");
+var jazzTrio = dom("jazz-trio");
+var liveVinyl = dom("live-vinyl");
+var dinnerAddedTime = dom("dinner-added-time");
+var djAndInstruments = dom("dj-and-instruments");
+var horns = dom("horns");
+var percussion = dom("percussion");
+var electricGuitar = dom("electric-guitar");
+var djAddedTime = dom("dj-added-time");
+var djLiveDances = dom("dj-live-dances");
+var danceBand = dom("dance-band");
+var saxophone = dom("saxophone");
+var bandAddedPlayers = dom("band-added-players");
+var bandAddedTime = dom("band-added-time");
+var silentDisco = dom("silent-disco");
+
+
+var customSongsSlider = dom("custom-songs-slider");
+var customSongsInput = dom("custom-songs-input");
+
+var cocktailAddedTimeSlider = dom("cocktail-added-time-slider");
+var cocktailAddedTimeInput = dom("cocktail-added-time-input");
+
+var dinnerAddedTimeSlider = dom("dinner-added-time-slider");
+var dinnerAddedTimeInput = dom("dinner-added-time-input");
+
+var hornsSlider = dom("horns-slider");
+var hornsInput = dom("horns-input");
+
+var djAddedTimeSlider = dom("dj-added-time-slider");
+var djAddedTimeInput = dom("dj-added-time-input");
+
+var djLiveDancesSlider = dom("dj-live-dances-slider");
+var djLiveDancesInput = dom("dj-live-dances-input");
+
+var bandAddedPlayersSlider = dom("band-added-players-slider");
+var bandAddedPlayersInput = dom("band-added-players-input");
+
+var bandAddedTimeSlider = dom("band-added-time-slider");
+var bandAddedTimeInput = dom("band-added-time-input");
+
+var numberOfHeadphonesSlider = dom("number-of-headphones-slider");
+var numberOfHeadphonesInput = dom("number-of-headphones-input");
+
+
+//Summary Sections
+
 //event info
 var eventNameInput = dom("event-name-input");
 var eventDateInput = dom("event-date-input");
@@ -17,138 +75,138 @@ var guestsInput = dom("guest-count-input");
 
 //ceremony
 var ceremony = dom("ceremony");
-var ceremonyCostLineItem = dom("ceremony-line-item");
+var ceremonyLineItem = dom("ceremony-line-item");
 var ceremonySelectionDisplay = dom("ceremony-selection-display");
 var ceremonyCostDisplay = dom("ceremony-cost-display");
 
 var ceremonySound = dom("ceremony-sound");
-var ceremonySoundCostLineItem = dom("ceremony-sound-line-item");
+var ceremonySoundLineItem = dom("ceremony-sound-line-item");
 var ceremonySoundSelectionDisplay = dom("ceremony-sound-selection-display");
 var ceremonySoundCostDisplay = dom("ceremony-sound-cost-display");
 
 var customSongs = dom("custom-songs");
-var customSongsCostLineItem = dom("custom-songs-line-item");
+var customSongsLineItem = dom("custom-songs-line-item");
 var customSongsSelectionDisplay = dom("custom-songs-selection-display");
 var customSongsCostDisplay = dom("custom-songs-cost-display");
-var numberCustomSongsInput = dom("number-custom-songs-input");
-var numberCustomSongsSlider = dom("number-custom-songs-slider");
+var customSongsInput = dom("custom-songs-input");
+var customSongsSlider = dom("custom-songs-slider");
 
 var beachCeremony = dom("beach-ceremony");
-var beachCeremonyCostLineItem = dom("beach-ceremony-line-item");
+var beachCeremonyLineItem = dom("beach-ceremony-line-item");
 var beachCeremonySelectionDisplay = dom("beach-ceremony-selection-display");
 var beachCeremonyCostDisplay = dom("beach-ceremony-cost-display");
 
-var ceremonyTotalCostLineItem = dom("ceremony-total-line-item");
+var ceremonyTotalLineItem = dom("ceremony-total-line-item");
 var ceremonyTotalSelectionDisplay = dom("ceremony-total-selection-display");
 var ceremonyTotalCostDisplay = dom("ceremony-total-cost-display");
 
 //cocktail hour
 var trio = dom("trio");
-var trioCostLineItem = dom("trio-line-item");
+var trioLineItem = dom("trio-line-item");
 var trioSelectionDisplay = dom("trio-selection-display");
 var trioCostDisplay = dom("trio-cost-display");
 
 var fullBand = dom("full-band");
-var fullBandCostLineItem = dom("full-band-line-item");
+var fullBandLineItem = dom("full-band-line-item");
 var fullBandSelectionDisplay = dom("full-band-selection-display");
 var fullBandCostDisplay = dom("full-band-cost-display");
 
 var cocktailHourAddedTime = dom("cocktail-hour-added-time");
-var cocktailHourAddedTimeCostLineItem = dom("cocktail-hour-added-time-line-item");
+var cocktailHourAddedTimeLineItem = dom("cocktail-hour-added-time-line-item");
 var cocktailHourAddedTimeSelectionDisplay = dom("cocktail-hour-added-time-selection-display");
 var cocktailHourAddedTimeCostDisplay = dom("cocktail-hour-added-time-cost-display");
 
 var cocktailHourTotal = dom("cocktail-hour-total");
-var cocktailHourTotalCostLineItem = dom("cocktail-hour-total-line-item");
+var cocktailHourTotalLineItem = dom("cocktail-hour-total-line-item");
 var cocktailHourTotalSelectionDisplay = dom("cocktail-hour-total-selection-display");
 var cocktailHourTotalCostDisplay = dom("cocktail-hour-total-cost-display");
 
 //dinner
 var playlist = dom("playlist");
-var playlistCostLineItem = dom("playlist-line-item");
+var playlistLineItem = dom("playlist-line-item");
 var playlistSelectionDisplay = dom("playlist-selection-display");
 var playlistCostDisplay = dom("playlist-cost-display");
 
 var jazzTrio = dom("jazz-trio");
-var jazzTrioCostLineItem = dom("jazz-trio-line-item");
+var jazzTrioLineItem = dom("jazz-trio-line-item");
 var jazzTrioSelectionDisplay = dom("jazz-trio-selection-display");
 var jazzTrioCostDisplay = dom("jazz-trio-cost-display");
 
 var liveVinyl = dom("live-vinyl");
-var liveVinylCostLineItem = dom("live-vinyl-line-item");
+var liveVinylLineItem = dom("live-vinyl-line-item");
 var liveVinylSelectionDisplay = dom("live-vinyl-selection-display");
 var liveVinylCostDisplay = dom("live-vinyl-cost-display");
 
 var dinnerAddedTime = dom("dinner-added-time");
-var dinnerAddedTimeCostLineItem = dom("dinner-added-time-line-item");
+var dinnerAddedTimeLineItem = dom("dinner-added-time-line-item");
 var dinnerAddedTimeSelectionDisplay = dom("dinner-added-time-selection-display");
 var dinnerAddedTimeCostDisplay = dom("dinner-added-time-cost-display");
 
 var dinnerTotal = dom("dinner-total");
-var dinnerTotalCostLineItem = dom("dinner-total-line-item");
+var dinnerTotalLineItem = dom("dinner-total-line-item");
 var dinnerTotalSelectionDisplay = dom("dinner-total-selection-display");
 var dinnerTotalCostDisplay = dom("dinner-total-cost-display");
 
 //DJ
 var horns = dom("horns");
-var hornsCostLineItem = dom("horns-line-item");
+var hornsLineItem = dom("horns-line-item");
 var hornsSelectionDisplay = dom("horns-selection-display");
 var hornsCostDisplay = dom("horns-cost-display");
 
 var percussion = dom("percussion");
-var percussionCostLineItem = dom("percussion-line-item");
+var percussionLineItem = dom("percussion-line-item");
 var percussionSelectionDisplay = dom("percussion-selection-display");
 var percussionCostDisplay = dom("percussion-cost-display");
 
 var electricGuitar = dom("electric-guitar");
-var electricGuitarCostLineItem = dom("electric-guitar-line-item");
+var electricGuitarLineItem = dom("electric-guitar-line-item");
 var electricGuitarSelectionDisplay = dom("electric-guitar-selection-display");
 var electricGuitarCostDisplay = dom("electric-guitar-cost-display");
 
 var djAddedTime = dom("dj-added-time");
-var djAddedTimeCostLineItem = dom("dj-added-time-line-item");
+var djAddedTimeLineItem = dom("dj-added-time-line-item");
 var djAddedTimeSelectionDisplay = dom("dj-added-time-selection-display");
 var djAddedTimeCostDisplay = dom("dj-added-time-cost-display");
 
 var djLiveDances = dom("dj-live-dances");
-var djLiveDancesCostLineItem = dom("dj-live-dances-line-item");
+var djLiveDancesLineItem = dom("dj-live-dances-line-item");
 var djLiveDancesSelectionDisplay = dom("dj-live-dances-selection-display");
 var djLiveDancesCostDisplay = dom("dj-live-dances-cost-display");
 
 var djTotal = dom("dj-total");
-var djTotalCostLineItem = dom("dj-total-line-item");
+var djTotalLineItem = dom("dj-total-line-item");
 var djTotalSelectionDisplay = dom("dj-total-selection-display");
 var djTotalCostDisplay = dom("dj-total-cost-display");
 
 //dance band
 var saxophone = dom("saxophone");
-var saxophoneCostLineItem = dom("saxophone-line-item");
+var saxophoneLineItem = dom("saxophone-line-item");
 var saxophoneSelectionDisplay = dom("saxophone-selection-display");
 var saxophoneCostDisplay = dom("saxophone-cost-display");
 
-var addedPlayers = dom("added-players");
-var addedPlayersCostLineItem = dom("added-players-line-item");
-var addedPlayersSelectionDisplay = dom("added-players-selection-display");
-var addedPlayersCostDisplay = dom("added-players-cost-display");
+var bandAddedPlayers = dom("band-added-players");
+var bandAddedPlayersLineItem = dom("band-added-players-line-item");
+var bandAddedPlayersSelectionDisplay = dom("band-added-players-selection-display");
+var bandAddedPlayersCostDisplay = dom("band-added-players-cost-display");
 
 var bandAddedTime = dom("band-added-time");
-var bandAddedTimeCostLineItem = dom("band-added-time-line-item");
+var bandAddedTimeLineItem = dom("band-added-time-line-item");
 var bandAddedTimeSelectionDisplay = dom("band-added-time-selection-display");
 var bandAddedTimeCostDisplay = dom("band-added-time-cost-display");
 
 var bandLiveDances = dom("band-live-dances");
-var bandLiveDancesCostLineItem = dom("band-live-dances-line-item");
+var bandLiveDancesLineItem = dom("band-live-dances-line-item");
 var bandLiveDancesSelectionDisplay = dom("band-live-dances-selection-display");
 var bandLiveDancesCostDisplay = dom("band-live-dances-cost-display");
 
 var bandTotal = dom("band-total");
-var bandTotalCostLineItem = dom("band-total-line-item");
+var bandTotalLineItem = dom("band-total-line-item");
 var bandTotalSelectionDisplay = dom("band-total-selection-display");
 var bandTotalCostDisplay = dom("band-total-cost-display");
 
 //silent disco
 var silentDiscoTotal = dom("silent-disco-total");
-var silentDiscoTotalCostLineItem = dom("silent-disco-total-line-item");
+var silentDiscoTotalLineItem = dom("silent-disco-total-line-item");
 var silentDiscoTotalSelectionDisplay = dom("silent-disco-total-selection-display");
 var silentDiscoTotalCostDisplay = dom("silent-disco-total-cost-display");
 
@@ -175,12 +233,12 @@ var depositInput = dom("deposit-input");
 // barTimeLineItem.style.display = 'none';
 
 // //cost details
-// breadCostLineItem.style.display = 'none';
-// oddsEndsCostLineItem.style.display = 'none';
-// dinnerCostLineItem.style.display = 'none';
-// stationAppetizersCostLineItem.style.display = 'none';
-// passedSavoryAppetizersCostLineItem.style.display = 'none';
-// passedDessertsCostLineItem.style.display = 'none';
+// breadLineItem.style.display = 'none';
+// oddsEndsLineItem.style.display = 'none';
+// dinnerLineItem.style.display = 'none';
+// stationAppetizersLineItem.style.display = 'none';
+// passedSavoryAppetizersLineItem.style.display = 'none';
+// passedDessertsLineItem.style.display = 'none';
 // lunchCostLineItem.style.display = 'none';
 
 // openBarCostLineItem.style.display = 'none';
