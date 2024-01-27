@@ -1,7 +1,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js" integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/timepicker@1.14.1/jquery.timepicker.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/bencappello/book-santa-barbara@main/js/brettCoVarsDefaults6.js?v=11"></script>
+<script src="https://cdn.jsdelivr.net/gh/bencappello/book-santa-barbara@main/js/brettCoVarsDefaults8.js?v=11"></script>
 <script src="https://cdn.jsdelivr.net/gh/bencappello/book-santa-barbara/js/dateTimePickers.js?"></script>
 <script>
 
@@ -59,20 +59,29 @@ function calculateChange() {
 
 };
 
-function updateSliderDisplay(prefix) {
-    var slider = eval(prefix + "Slider");
+function updateHeaderDisplay(prefix) {
+}
+
+function updateLineItemDisplay(prefix) {
+    var checkbox = eval(prefix);
     var lineItem = eval(prefix + "LineItem");
+
+    if (checkbox.checked) {
+        lineItem.style.display = 'flex';
+    } else {
+        lineItem.style.display = 'none';
+    }
+}
+
+function updateSliderDisplay(prefix) {
+    console.log("prefix", prefix)
+
+    var input = eval(prefix + "Input");
+    var slider = eval(prefix + "Slider");
     var costDisplay = eval(prefix + "CostDisplay");
 
-    console.log("prefix", prefix)
-    eval(prefix + "Input.value = " + prefix + "Slider.value;");
-    
-    if (slider.value && slider.value !== '0') { 
-        lineItem.style.display = 'flex';
-        costDisplay.innerHTML = slider.value;
-    } else {
-        costDisplay.innerHTML = slider.value;
-    }
+    input.value = + slider.value;
+    costDisplay.innerHTML = slider.value;
 }
 
 function calculateTotalCost() {
