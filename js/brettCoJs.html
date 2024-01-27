@@ -1,7 +1,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js" integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/timepicker@1.14.1/jquery.timepicker.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/bencappello/book-santa-barbara@main/js/brettCoVarsDefaults8.js?v=11"></script>
+<script src="https://cdn.jsdelivr.net/gh/bencappello/book-santa-barbara@main/js/brettCoVarsDefaults10.js?v=11"></script>
 <script src="https://cdn.jsdelivr.net/gh/bencappello/book-santa-barbara/js/dateTimePickers.js?"></script>
 <script>
 
@@ -24,6 +24,33 @@ function calculateChange() {
     updateSliderDisplay("djLiveDances");
     updateSliderDisplay("bandAddedPlayers");
     updateSliderDisplay("bandAddedTime");
+
+    
+    updateLineItemDisplay("ceremonySound");
+    updateLineItemDisplay("remotePower");
+    updateLineItemDisplay("customSongs");
+    updateLineItemDisplay("beachCeremony");
+    
+    updateLineItemDisplay("trio");
+    updateLineItemDisplay("fullBand");
+    updateLineItemDisplay("cocktailAddedTime");
+    
+    updateLineItemDisplay("playlist");
+    updateLineItemDisplay("jazzTrio");
+    updateLineItemDisplay("liveVinyl");
+    updateLineItemDisplay("dinnerAddedTime");
+    
+    updateLineItemDisplay("horns");
+    updateLineItemDisplay("percussion");
+    updateLineItemDisplay("electricGuitar");
+    updateLineItemDisplay("djAddedTime");
+    updateLineItemDisplay("djLiveDances");
+    
+    updateLineItemDisplay("saxophone");
+    updateLineItemDisplay("bandAddedPlayers");
+    updateLineItemDisplay("bandAddedTime");
+
+
 
     // silentDiscoInput.value = silentDiscoSlider.value
     
@@ -62,6 +89,19 @@ function calculateChange() {
 function updateHeaderDisplay(prefix) {
 }
 
+function updateSliderDisplay(prefix) {
+    console.log("prefix", prefix)
+
+    var input = eval(prefix + "Input");
+    var slider = eval(prefix + "Slider");
+    var costDisplay = eval(prefix + "CostDisplay");
+
+    input.value = slider.value;
+    costDisplay.innerHTML = slider.value;
+
+    updateLineItemDisplay(prefix);
+}
+
 function updateLineItemDisplay(prefix) {
     var checkbox = eval(prefix);
     var lineItem = eval(prefix + "LineItem");
@@ -71,17 +111,6 @@ function updateLineItemDisplay(prefix) {
     } else {
         lineItem.style.display = 'none';
     }
-}
-
-function updateSliderDisplay(prefix) {
-    console.log("prefix", prefix)
-
-    var input = eval(prefix + "Input");
-    var slider = eval(prefix + "Slider");
-    var costDisplay = eval(prefix + "CostDisplay");
-
-    input.value = + slider.value;
-    costDisplay.innerHTML = slider.value;
 }
 
 function calculateTotalCost() {
