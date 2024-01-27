@@ -16,25 +16,23 @@ function calculateChange() {
     var eventDateObject = new Date(eventDateInput.value);
     var totalCost = calculateTotalCost();
 
-    updateDisplay("customSongs");
-    updateDisplay("cocktailAddedTime");
-    updateDisplay("dinnerAddedTime");
-    updateDisplay("horns");
-    updateDisplay("djAddedTime");
-    updateDisplay("djLiveDances");
-    updateDisplay("bandAddedPlayers");
-    updateDisplay("bandAddedTime");
-    updateDisplay("numberOfHeadphones");
+    updateSliderDisplay("customSongs");
+    updateSliderDisplay("cocktailHourAddedTime");
+    updateSliderDisplay("dinnerAddedTime");
+    updateSliderDisplay("horns");
+    updateSliderDisplay("djAddedTime");
+    updateSliderDisplay("djLiveDances");
+    updateSliderDisplay("bandAddedPlayers");
+    updateSliderDisplay("bandAddedTime");
 
-    // customSongsInput.value = customSongsSlider.value;
-    // cocktailAddedTimeInput.value = cocktailAddedTimeSlider.value;
-    // dinnerAddedTimeInput.value = dinnerAddedTimeSlider.value;
-    // hornsInput.value = hornsSlider.value;
-    // djAddedTimeInput.value = djAddedTimeSlider.value;
-    // djLiveDancesInput.value = djLiveDancesSlider.value;
-    // addedPlayersInput.value = addedPlayersSlider.value;
-    // bandAddedTimeInput.value = bandAddedTimeSlider.value;
-    // numberOfHeadphonesInput.value = numberOfHeadphonesSlider.value;
+    // silentDiscoInput.value = silentDiscoSlider.value
+    
+    // if (silentDiscoSlider.value && silentDiscoSlider.value !== '0') { 
+    //     silentDiscoTotalLineItem.style.display = 'flex';
+    //     silentDiscoTotalCostDisplay.innerHTML = silentDiscoSlider.value;
+    // } else {
+    //     silentDiscoCostDisplay.innerHTML = silentDiscoSlider.value;
+    // }
 
 
     //EVENT INFO
@@ -59,79 +57,14 @@ function calculateChange() {
         endTimeDisplay.innerHTML = endTimeInput.value.replace(":00", ":00 ");
     };
 
-    if (customSongsSlider.value && customSongsSlider.value !== '0') { 
-        customSongsLineItem.style.display = 'flex';
-        customSongsDisplay.innerHTML = customSongsSlider.value;
-    } else {
-        customSongsDisplay.innerHTML = customSongsSlider.value;
-    };
-
-    // if (cocktailAddedTimeSlider.value && cocktailAddedTimeSlider.value !== '0') { 
-    //     cocktailAddedTimeLineItem.style.display = 'flex';
-    //     cocktailAddedTimeDisplay.innerHTML = cocktailAddedTimeSlider.value;
-    // } else {
-    //     cocktailAddedTimeDisplay.innerHTML = cocktailAddedTimeSlider.value;
-    // };
-
-    // if (dinnerAddedTimeSlider.value && dinnerAddedTimeSlider.value !== '0') { 
-    //     dinnerAddedTimeLineItem.style.display = 'flex';
-    //     dinnerAddedTimeDisplay.innerHTML = dinnerAddedTimeSlider.value;
-    // } else {
-    //     dinnerAddedTimeDisplay.innerHTML = dinnerAddedTimeSlider.value;
-    // };
-
-    // if (hornsSlider.value && hornsSlider.value !== '0') { 
-    //     hornsLineItem.style.display = 'flex';
-    //     hornsDisplay.innerHTML = hornsSlider.value;
-    // } else {
-    //     hornsDisplay.innerHTML = hornsSlider.value;
-    // };
-
-    // if (djAddedTimeSlider.value && djAddedTimeSlider.value !== '0') { 
-    //     djAddedTimeLineItem.style.display = 'flex';
-    //     djAddedTimeDisplay.innerHTML = djAddedTimeSlider.value;
-    // } else {
-    //     djAddedTimeDisplay.innerHTML = djAddedTimeSlider.value;
-    // };
-
-    // if (djLiveDancesSlider.value && djLiveDancesSlider.value !== '0') { 
-    //     djLiveDancesLineItem.style.display = 'flex';
-    //     djLiveDancesDisplay.innerHTML = djLiveDancesSlider.value;
-    // } else {
-    //     djLiveDancesDisplay.innerHTML = djLiveDancesSlider.value;
-    // };
-
-    // if (bandAddedPlayersSlider.value && bandAddedPlayersSlider.value !== '0') { 
-    //     bandAddedPlayersLineItem.style.display = 'flex';
-    //     bandAddedPlayersDisplay.innerHTML = bandAddedPlayersSlider.value;
-    // } else {
-    //     bandAddedPlayersDisplay.innerHTML = bandAddedPlayersSlider.value;
-    // };
-
-    // if (bandAddedTimeSlider.value && bandAddedTimeSlider.value !== '0') { 
-    //     bandAddedTimeLineItem.style.display = 'flex';
-    //     bandAddedTimeDisplay.innerHTML = bandAddedTimeSlider.value;
-    // } else {
-    //     bandAddedTimeDisplay.innerHTML = bandAddedTimeSlider.value;
-    // };
-
-    // if (numberOfHeadphonesSlider.value && numberOfHeadphonesSlider.value !== '0') { 
-    //     numberOfHeadphonesLineItem.style.display = 'flex';
-    //     numberOfHeadphonesDisplay.innerHTML = numberOfHeadphonesSlider.value;
-    // } else {
-    //     numberOfHeadphonesDisplay.innerHTML = numberOfHeadphonesSlider.value;
-    // };
-
-
-
-
 };
 
-function updateDisplay(prefix) {
+function updateSliderDisplay(prefix) {
     var slider = eval(prefix + "Slider");
     var lineItem = eval(prefix + "LineItem");
     var costDisplay = eval(prefix + "CostDisplay");
 
+    console.log("prefix", prefix)
     eval(prefix + "Input.value = " + prefix + "Slider.value;");
     
     if (slider.value && slider.value !== '0') { 
