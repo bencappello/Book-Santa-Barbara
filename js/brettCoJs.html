@@ -16,39 +16,35 @@ function calculateChange() {
     var eventDateObject = new Date(eventDateInput.value);
     var totalCost = calculateTotalCost();
 
-    updateSliderDisplay("customSongs");
-    updateSliderDisplay("cocktailHourAddedTime");
-    updateSliderDisplay("dinnerAddedTime");
-    updateSliderDisplay("horns");
-    updateSliderDisplay("djAddedTime");
-    updateSliderDisplay("djLiveDances");
-    updateSliderDisplay("bandAddedPlayers");
-    updateSliderDisplay("bandAddedTime");
-
+    handleTimeSlider("cocktailHourAddedTime", 15);
+    handleTimeSlider("dinnerAddedTime", 15);
+    handleTimeSlider("djAddedTime", 30);
+    handleTimeSlider("bandAddedTime", 15);
     
-    updateLineItemDisplay("ceremonySound");
-    updateLineItemDisplay("remotePower");
-    updateLineItemDisplay("customSongs");
-    updateLineItemDisplay("beachCeremony");
     
-    updateLineItemDisplay("trio");
-    updateLineItemDisplay("fullBand");
-    updateLineItemDisplay("cocktailAddedTime");
+    updateLineItemDisplay("ceremonySound", 350);
+    updateLineItemDisplay("remotePower", 200);
+    handleAddOnSlider("customSongs", 100, 1);
+    updateLineItemDisplay("beachCeremony", 200);
     
-    updateLineItemDisplay("playlist");
-    updateLineItemDisplay("jazzTrio");
-    updateLineItemDisplay("liveVinyl");
-    updateLineItemDisplay("dinnerAddedTime");
+    updateLineItemDisplay("trio", 350);
+    updateLineItemDisplay("fullBand", 200);
+    // updateLineItemDisplay("cocktailHourAddedTime");
     
-    updateLineItemDisplay("horns");
-    updateLineItemDisplay("percussion");
-    updateLineItemDisplay("electricGuitar");
-    updateLineItemDisplay("djAddedTime");
-    updateLineItemDisplay("djLiveDances");
+    updateLineItemDisplay("playlist", 0);
+    updateLineItemDisplay("jazzTrio", 200);
+    updateLineItemDisplay("liveVinyl", 200);
+    // updateLineItemDisplay("dinnerAddedTime");
     
-    updateLineItemDisplay("saxophone");
-    updateLineItemDisplay("bandAddedPlayers");
-    updateLineItemDisplay("bandAddedTime");
+    handleAddOnSlider("horns", 300, 1);
+    updateLineItemDisplay("percussion", 300);
+    updateLineItemDisplay("electricGuitar", 300);
+    // updateLineItemDisplay("djAddedTime");
+    handleAddOnSlider("djLiveDances", 100, 1);
+    
+    updateLineItemDisplay("saxophone", 300);
+    handleAddOnSlider("bandAddedPlayers", 300, 1);
+    // updateLineItemDisplay("bandAddedTime");
 
 
 
@@ -89,22 +85,36 @@ function calculateChange() {
 function updateHeaderDisplay(prefix) {
 }
 
-function updateSliderDisplay(prefix) {
+function handleTimeSlider(prefix, step) {
+    var input = eval(prefix + "Input");
+    var slider = eval(prefix + "Slider");
+    var time = slider.value * step;
+
+    input.value = time;
+
+    updateLineItemDisplay(prefix, time, false);
+}
+
+function handleAddOnSlider(prefix, cost, step = 1) {
     console.log("prefix", prefix)
 
     var input = eval(prefix + "Input");
     var slider = eval(prefix + "Slider");
-    var costDisplay = eval(prefix + "CostDisplay");
 
-    input.value = slider.value;
-    costDisplay.innerHTML = slider.value;
+    input.value = slider.value * step;
+    cost = cost * slider.value
 
-    updateLineItemDisplay(prefix);
+    updateLineItemDisplay(prefix, cost);
 }
 
-function updateLineItemDisplay(prefix) {
+function updateLineItemDisplay(prefix, cost, dollarCost = true) {
     var checkbox = eval(prefix);
     var lineItem = eval(prefix + "LineItem");
+    var costDisplay = eval(prefix + "CostDisplay");
+
+    if (dollarCost) { cost = "$" + cost };
+
+    costDisplay.innerHTML = cost;
 
     if (checkbox.checked) {
         lineItem.style.display = 'flex';

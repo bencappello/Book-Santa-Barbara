@@ -195,9 +195,9 @@ var bandLiveDancesCostDisplay = dom("band-live-dances-cost-display");
 //silent disco
 var silentDisco = dom("silent-disco");
 
-var silentDiscoLineItem = dom("silent-disco-total-line-item");
-var silentDiscoSelectionDisplay = dom("silent-disco-total-selection-display");
-var silentDiscoCostDisplay = dom("silent-disco-total-cost-display");
+var silentDiscoLineItem = dom("silent-disco-line-item");
+var silentDiscoSelectionDisplay = dom("silent-disco-selection-display");
+var silentDiscoCostDisplay = dom("silent-disco-cost-display");
 
 //totals
 var totalCostDisplay = dom("total-cost-display");
