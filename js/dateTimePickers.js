@@ -101,8 +101,7 @@ endTime.timepicker({
   'step': () => 60,
   'scrollDefault': '11:00am',
   'forceRoundTime': true,
-  'minTime': '1:00am',
-  'maxTime': '12:00am'
+  'minTime': '3:00am'
 });
   
 datePicker.change(setDisabledTimes);
