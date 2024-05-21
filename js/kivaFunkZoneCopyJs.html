@@ -4,14 +4,53 @@
 <script src='https://html2canvas.hertzen.com/dist/html2canvas.min.js'></script>
 <script>
 
+//Add the ID for the calendar for this vendor/venue
 const calendarID = "c_18830fm7jfvm6i9ol6had48r9ourq@resource.calendar.google.com"
+
+//The name of the form ID as it appears in webflow
+const form = dom("wf-form-Brett-Co-Quote-Form");
+
+function services() {
+    return(
+        timeAgnosticService(
+            "space-rental",
+            650,
+            [
+                updateOptionDisplay("space-rental", "outdoor-patio", 350),
+                handleAddOnSlider("space-rental", "custom-songs", 100, 1),
+                updateOptionDisplay("space-rental", "beach-ceremony", 200)
+            ]
+        )
+
+        +
+
+        handleServiceSelection(
+            "band-full-event",
+            0,
+            60,
+            [
+            updateOptionDisplay("band-full-event", "second-vocalist", 350),
+            updateOptionDisplay("band-full-event", "saxophone-player", 200)
+            ]
+        )
+
+        +
+
+        timeAgnosticService(
+            "silent-disco",
+            0,
+            [
+                handleAddOnSlider("silent-disco", "people", 5, 5, false),  
+            ]
+        )
+    )
+}
+
+//------------------------------------STATIC CODE DO NOT EDIT BELOW THIS LINE ----------------------------------------------------
 
 function dom(id) {
     return document.getElementById(id);
 };
-
-//FORM INPUTS
-var form = dom("wf-form-Brett-Co-Quote-Form");
 
 // event info
 var guestsSlider = dom("guests-slider");
@@ -34,95 +73,8 @@ function calculateChange() {
     var totalCost;
 
     //Price element updating
-    totalCost = (
-        handleServiceSelection(
-            "ceremony",
-            650,
-            60,
-            [
-                updateOptionDisplay("ceremony", "ceremony-sound", 350),
-                updateOptionDisplay("ceremony", "remote-power", 200),
-                handleAddOnSlider("ceremony", "custom-songs", 100, 1),
-                updateOptionDisplay("ceremony", "beach-ceremony", 200)
-            ]
-        )
-
-        +
-        
-        handleServiceSelection(
-            "cocktail-hour-trio",
-            1400,
-            60,
-            [],
-            handleTimeSlider("cocktail-hour-trio", "added-time", 15)
-        )
-
-        +
-
-        handleServiceSelection(
-            "cocktail-hour-full-band",
-            1800,
-            60,
-            [],
-            handleTimeSlider("cocktail-hour-full-band", "added-time", 15)
-        )
-
-        +
-
-        handleServiceSelection(
-            "dinner",
-            450,
-            120,
-            [
-                updateOptionDisplay("dinner", "jazz-trio", 1650),
-                updateOptionDisplay("dinner", "modern-jazz-ensemble", 2150)
-                
-            ],
-            handleTimeSlider("dinner", "added-time", 15)
-        )
-
-        +
-
-        handleServiceSelection(
-            "dj",
-            2500,
-            180,
-            [
-                handleAddOnSlider("dj", "horns", 300, 1),
-                updateOptionDisplay("dj", "percussion", 300),
-                updateOptionDisplay("dj", "electric-guitar", 300),
-                handleAddOnSlider("dj", "live-dances", 100, 1)
-                
-            ],
-            handleTimeSlider("dj", "added-time", 30)
-        )
-
-        +
-
-        handleServiceSelection(
-            "band",
-            2000,
-            60,
-            [
-                updateOptionDisplay("band", "saxophone", 300),
-                handleAddOnSlider("band", "added-players", 300, 1)
-                
-                
-            ],
-            handleTimeSlider("band", "added-time", 15)
-        )
-
-        +
-
-        handleServiceSelection(
-            "silent-disco",
-            0,
-            60,
-            [
-                handleAddOnSlider("silent-disco", "headphones", 5, 5, false),  
-            ]
-        )
-    )
+    console.log("services", services())
+    totalCost = services();
 
     deposit = Math.floor(totalCost * 0.2);
     dom("total-cost-display").innerHTML = "$" + totalCost;
@@ -261,6 +213,18 @@ function handleAddOnSlider(service, prefix, cost, step = 1, lineItem = true) {
     }
 };
 
+function timeAgnosticService(prefix, baseCost, optionCosts) {
+    return handleServiceSelection(prefix, baseCost, 60, optionCosts)
+}
+
+function eventTimeService(prefix, baseCost, optionCosts) {
+    var startTime = dom("start-time-input").value;
+    var endTime = dom("end-time-input").value;
+    var hours = calculateHoursBetween(startTime, endTime)
+
+    return handleServiceSelection(prefix, baseCost, hours, optionCosts)
+}
+
 function handleServiceSelection(prefix, baseCost, baseTime, optionCosts, addedTime = 0) {
     var checkbox = dom(prefix);
     var serviceSection = dom(prefix + "-service-section");
@@ -317,8 +281,6 @@ function addOrShowService(prefix, totalCost) {
         serviceLineItem.appendChild(costDisplay);
         serviceSection.appendChild(serviceLineItem);
         dom('services-summary').appendChild(serviceSection);
-
-        // updateOptionDisplay(prefix, prefix, cost, true, prefix + "-total")
     }
 };
 
@@ -369,12 +331,6 @@ function calculateHoursBetween(startTime, endTime) {
 
   return diffInMinutes / 60;
 }
-
-var startTimeInputValue = dom("start-time-input").value;
-var endTimeInputValue = dom("end-time-input").value;
-
-const hoursBetween = calculateHoursBetween('11:00am', '2:00pm');
-console.log(`The number of hours between ${startTimeInputValue} and ${endTimeInputValue} is ${calculateHoursBetween(startTimeInputValue, endTimeInputValue)} hours.`);
 
 </script>
 <script src="https://cdn.jsdelivr.net/gh/bencappello/book-santa-barbara/js/dateTimePickers.js?"></script>

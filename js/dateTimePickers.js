@@ -147,9 +147,3 @@ function calculateHoursBetween(startTime, endTime) {
 
   return diffInMinutes / 60;
 }
-
-const startTime = '11:00am';
-const endTime = '2:00pm';
-
-const hoursBetween = calculateHoursBetween(startTime, endTime);
-console.log(`The number of hours between ${startTime} and ${endTime} is ${hoursBetween} hours.`);
