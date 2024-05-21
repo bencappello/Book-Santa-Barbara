@@ -118,3 +118,38 @@ function setDisabledTimes() {
     endTime.timepicker('option', 'disableTimeRanges', []);
   }
 };
+
+function parseTimeString(timeString) {
+  const [time, modifier] = timeString.split(/(am|pm)/);
+  let [hours, minutes] = time.split(':').map(Number);
+
+  if (modifier === 'pm' && hours !== 12) {
+      hours += 12;
+  }
+  if (modifier === 'am' && hours === 12) {
+      hours = 0;
+  }
+
+  return { hours, minutes };
+}
+
+function calculateHoursBetween(startTime, endTime) {
+  const start = parseTimeString(startTime);
+  const end = parseTimeString(endTime);
+
+  let startInMinutes = start.hours * 60 + start.minutes;
+  let endInMinutes = end.hours * 60 + end.minutes;
+
+  let diffInMinutes = endInMinutes - startInMinutes;
+  if (diffInMinutes < 0) {
+      diffInMinutes += 24 * 60; // handle cases where endTime is on the next day
+  }
+
+  return diffInMinutes / 60;
+}
+
+const startTime = '11:00am';
+const endTime = '2:00pm';
+
+const hoursBetween = calculateHoursBetween(startTime, endTime);
+console.log(`The number of hours between ${startTime} and ${endTime} is ${hoursBetween} hours.`);
