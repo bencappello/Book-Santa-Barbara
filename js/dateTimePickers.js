@@ -1,7 +1,5 @@
 //Google Calendar
 const googleURL = "https://www.googleapis.com/calendar/v3/calendars/" + calendarID + "/events?key=" + apiKey;
-//KDJGHDGJKHSKJGHSJGHG
-//DGJHDGJSHGKJJGKSHGD
 
 var events = {};
 var eventsAsStrings = {};
@@ -95,12 +93,16 @@ var eventLength = 0;
 startTime.timepicker({
   'step': () => 60,
   'scrollDefault': '11:00am',
-  'forceRoundTime': true
+  'forceRoundTime': true,
+  'minTime': '1:00am',
+  'maxTime': '12:00am'
 });
 endTime.timepicker({
   'step': () => 60,
   'scrollDefault': '11:00am',
-  'forceRoundTime': true
+  'forceRoundTime': true,
+  'minTime': '1:00am',
+  'maxTime': '12:00am'
 });
   
 datePicker.change(setDisabledTimes);
