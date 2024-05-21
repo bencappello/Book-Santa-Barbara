@@ -1,13 +1,6 @@
-const calendarID = "c_18830fm7jfvm6i9ol6had48r9ourq@resource.calendar.google.com"
 
-function dom(id) {
-    return document.getElementById(id);
-};
 
-//FORM INPUTS
-var brettCoRequestForm = dom("brett-co-request-form");
-
-//event info
+// event info
 var eventNameInput = dom("event-name-input");
 var eventDateInput = dom("event-date-input");
 var startTimeInput = dom("start-time-input");
@@ -58,8 +51,8 @@ var endTimeDisplay = dom("end-time-display");
 var guestCountDisplay = dom("guest-count-display");
 
 //ceremony
+var ceremonySummarySection = dom("ceremony-summary-section");
 var ceremony = dom("ceremony");
-
 var ceremonyTotalLineItem = dom("ceremony-total-line-item");
 var ceremonyTotalSelectionDisplay = dom("ceremony-total-selection-display");
 var ceremonyTotalCostDisplay = dom("ceremony-total-cost-display");
@@ -85,8 +78,8 @@ var beachCeremonySelectionDisplay = dom("beach-ceremony-selection-display");
 var beachCeremonyCostDisplay = dom("beach-ceremony-cost-display");
 
 //cocktail hour
+var cocktailHourSummarySection = dom("cocktail-hour-summary-section");
 var cocktailHour = dom("cocktail-hour");
-
 var cocktailHourTotalLineItem = dom("cocktail-hour-total-line-item");
 var cocktailHourTotalSelectionDisplay = dom("cocktail-hour-total-selection-display");
 var cocktailHourTotalCostDisplay = dom("cocktail-hour-total-cost-display");
@@ -107,8 +100,8 @@ var cocktailHourAddedTimeSelectionDisplay = dom("cocktail-hour-added-time-select
 var cocktailHourAddedTimeCostDisplay = dom("cocktail-hour-added-time-cost-display");
 
 //dinner
+var dinnerSummarySection = dom("dinner-summary-section");
 var dinner = dom("dinner");
-
 var dinnerTotalLineItem = dom("dinner-total-line-item");
 var dinnerTotalSelectionDisplay = dom("dinner-total-selection-display");
 var dinnerTotalCostDisplay = dom("dinner-total-cost-display");
@@ -134,8 +127,8 @@ var dinnerAddedTimeSelectionDisplay = dom("dinner-added-time-selection-display")
 var dinnerAddedTimeCostDisplay = dom("dinner-added-time-cost-display");
 
 //DJ
+var djSummarySection = dom("dj-summary-section");
 var dj = dom("dj");
-
 var djTotalLineItem = dom("dj-total-line-item");
 var djTotalSelectionDisplay = dom("dj-total-selection-display");
 var djTotalCostDisplay = dom("dj-total-cost-display");
@@ -166,8 +159,8 @@ var djLiveDancesSelectionDisplay = dom("dj-live-dances-selection-display");
 var djLiveDancesCostDisplay = dom("dj-live-dances-cost-display");
 
 //dance band
+var bandSummarySection = dom("band-summary-section");
 var band = dom("band");
-
 var bandTotalLineItem = dom("band-total-line-item");
 var bandTotalSelectionDisplay = dom("band-total-selection-display");
 var bandTotalCostDisplay = dom("band-total-cost-display");
@@ -193,32 +186,10 @@ var bandLiveDancesSelectionDisplay = dom("band-live-dances-selection-display");
 var bandLiveDancesCostDisplay = dom("band-live-dances-cost-display");
 
 //silent disco
+var silentDiscoSummarySection = dom("silent-disco-summary-section");
 var silentDisco = dom("silent-disco");
-
 var silentDiscoLineItem = dom("silent-disco-line-item");
 var silentDiscoSelectionDisplay = dom("silent-disco-selection-display");
 var silentDiscoCostDisplay = dom("silent-disco-cost-display");
 
-//totals
-var totalCostDisplay = dom("total-cost-display");
-var totalCostInput = dom("total-cost-input");
 
-var depositDisplay = dom("deposit-display");
-var depositInput = dom("deposit-input");
-
-//set defaults
-//inputs
-guestsInput.value = guestsSlider.value = 0;
-customSongsInput.value = customSongsSlider.value = 0;
-cocktailHourAddedTimeInput.value = cocktailHourAddedTimeSlider.value = 0;
-dinnerAddedTimeInput.value = dinnerAddedTimeSlider.value = 0;
-hornsInput.value = hornsSlider.value = 0;
-djAddedTimeInput.value = djAddedTimeSlider.value = 0;
-djLiveDancesInput.value = djLiveDancesSlider.value = 0;
-bandAddedPlayersInput.value = bandAddedPlayersSlider.value = 0;
-bandAddedTimeInput.value = bandAddedTimeSlider.value = 0;
-silentDiscoInput.value = silentDiscoSlider.value = 0;
-
-//total details
-totalCostDisplay.innerHTML = "$0" 
-depositDisplay.innerHTML = "$0";

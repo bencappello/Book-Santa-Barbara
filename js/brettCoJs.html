@@ -1,128 +1,345 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js" integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/timepicker@1.14.1/jquery.timepicker.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/bencappello/book-santa-barbara@main/js/brettCoVarsDefaults10.js?v=11"></script>
-<script src="https://cdn.jsdelivr.net/gh/bencappello/book-santa-barbara/js/dateTimePickers.js?"></script>
+<script src='https://html2canvas.hertzen.com/dist/html2canvas.min.js'></script>
 <script>
 
+const calendarID = "c_18830fm7jfvm6i9ol6had48r9ourq@resource.calendar.google.com"
+
+function dom(id) {
+    return document.getElementById(id);
+};
+
+//FORM INPUTS
+var form = dom("wf-form-Brett-Co-Quote-Form");
+
+// event info
+var guestsSlider = dom("guests-slider");
+var guestsInput = dom("guest-count-input");
+
+//total details
+dom("total-cost-display").innerHTML = "$0" 
+dom("deposit-display").innerHTML = "$0";
+
 //onchange
-brettCoRequestForm.onchange = calculateChange;
-brettCoRequestForm.oninput = calculateChange;
+form.onchange = calculateChange;
+form.oninput = calculateChange;
 
 //Calculation
 function calculateChange() {
     console.log("calculateChange");
 
-    var eventDateObject = new Date(eventDateInput.value);
-    var totalCost = calculateTotalCost();
+    var eventDateObject = new Date(dom("event-date-input").value);
+    var deposit;
+    var totalCost;
 
-    handleTimeSlider("cocktailHourAddedTime", 15);
-    handleTimeSlider("dinnerAddedTime", 15);
-    handleTimeSlider("djAddedTime", 30);
-    handleTimeSlider("bandAddedTime", 15);
-    
-    
-    updateLineItemDisplay("ceremonySound", 350);
-    updateLineItemDisplay("remotePower", 200);
-    handleAddOnSlider("customSongs", 100, 1);
-    updateLineItemDisplay("beachCeremony", 200);
-    
-    updateLineItemDisplay("trio", 350);
-    updateLineItemDisplay("fullBand", 200);
-    // updateLineItemDisplay("cocktailHourAddedTime");
-    
-    updateLineItemDisplay("playlist", 0);
-    updateLineItemDisplay("jazzTrio", 200);
-    updateLineItemDisplay("liveVinyl", 200);
-    // updateLineItemDisplay("dinnerAddedTime");
-    
-    handleAddOnSlider("horns", 300, 1);
-    updateLineItemDisplay("percussion", 300);
-    updateLineItemDisplay("electricGuitar", 300);
-    // updateLineItemDisplay("djAddedTime");
-    handleAddOnSlider("djLiveDances", 100, 1);
-    
-    updateLineItemDisplay("saxophone", 300);
-    handleAddOnSlider("bandAddedPlayers", 300, 1);
-    // updateLineItemDisplay("bandAddedTime");
+    //Price element updating
+    totalCost = (
+        handleServiceSelection(
+            "ceremony",
+            650,
+            60,
+            [
+                updateOptionDisplay("ceremony", "ceremony-sound", 350),
+                updateOptionDisplay("ceremony", "remote-power", 200),
+                handleAddOnSlider("ceremony", "custom-songs", 100, 1),
+                updateOptionDisplay("ceremony", "beach-ceremony", 200)
+            ]
+        )
 
+        +
+        
+        handleServiceSelection(
+            "cocktail-hour-trio",
+            1400,
+            60,
+            [],
+            handleTimeSlider("cocktail-hour-trio", "added-time", 15)
+        )
 
+        +
 
-    // silentDiscoInput.value = silentDiscoSlider.value
-    
-    // if (silentDiscoSlider.value && silentDiscoSlider.value !== '0') { 
-    //     silentDiscoTotalLineItem.style.display = 'flex';
-    //     silentDiscoTotalCostDisplay.innerHTML = silentDiscoSlider.value;
-    // } else {
-    //     silentDiscoCostDisplay.innerHTML = silentDiscoSlider.value;
-    // }
+        handleServiceSelection(
+            "cocktail-hour-full-band",
+            1800,
+            60,
+            [],
+            handleTimeSlider("cocktail-hour-full-band", "added-time", 15)
+        )
+
+        +
+
+        handleServiceSelection(
+            "dinner",
+            450,
+            120,
+            [
+                updateOptionDisplay("dinner", "jazz-trio", 1650),
+                updateOptionDisplay("dinner", "modern-jazz-ensemble", 2150)
+                
+            ],
+            handleTimeSlider("dinner", "added-time", 15)
+        )
+
+        +
+
+        handleServiceSelection(
+            "dj",
+            2500,
+            180,
+            [
+                handleAddOnSlider("dj", "horns", 300, 1),
+                updateOptionDisplay("dj", "percussion", 300),
+                updateOptionDisplay("dj", "electric-guitar", 300),
+                handleAddOnSlider("dj", "live-dances", 100, 1)
+                
+            ],
+            handleTimeSlider("dj", "added-time", 30)
+        )
+
+        +
+
+        handleServiceSelection(
+            "band",
+            2000,
+            60,
+            [
+                updateOptionDisplay("band", "saxophone", 300),
+                handleAddOnSlider("band", "added-players", 300, 1)
+                
+                
+            ],
+            handleTimeSlider("band", "added-time", 15)
+        )
+
+        +
+
+        handleServiceSelection(
+            "silent-disco",
+            0,
+            60,
+            [
+                handleAddOnSlider("silent-disco", "headphones", 5, 5, false),  
+            ]
+        )
+    )
+
+    deposit = Math.floor(totalCost * 0.2);
+    dom("total-cost-display").innerHTML = "$" + totalCost;
+    dom("total-cost-input").value = totalCost;
+    dom("deposit-display").innerHTML = "$" + deposit;
+    dom("deposit-input").value = deposit;
 
 
     //EVENT INFO
-    if (eventNameInput.value) { 
-        eventNameDisplay.hidden = false;
-        eventNameDisplay.innerHTML = eventNameInput.value;
-    };
-    if (eventDateInput.value) { 
-        dateLineItem.style.display = 'flex';
-        eventDateDisplay.innerHTML = eventDateObject.toLocaleString("en-US", {
+    handleEventInput(
+        dom("event-name-input"),
+        dom("event-name-display"),
+        dom("event-name-display"),
+        dom("event-name-input").value
+    );
+
+    handleEventInput(
+        dom("event-date-input"),
+        dom("date-line-item"),
+        dom("event-date-display"),
+        eventDateObject.toLocaleString("en-US", {
             month: 'long',
             day: 'numeric',
             year: 'numeric'
-        });
-    };
-    if (startTimeInput.value) { 
-        startLineItem.style.display = 'flex';
-        startTimeDisplay.innerHTML = startTimeInput.value.replace(":00", ":00 ");
-    };
-    if (endTimeInput.value) { 
-        endLineItem.style.display = 'flex';
-        endTimeDisplay.innerHTML = endTimeInput.value.replace(":00", ":00 ");
-    };
+        })
+    );
 
+    handleEventInput(
+        dom("start-time-input"),
+        dom("start-line-item"),
+        dom("start-time-display"),
+        dom("start-time-input").value.replace(":00", ":00 ")
+    );
+
+    handleEventInput(
+        dom("end-time-input"),
+        dom("end-line-item"),
+        dom("end-time-display"),
+        dom("end-time-input").value.replace(":00", ":00 ")
+    );
+
+    guestsInput.value = guestsSlider.value;
+    dom("guest-count-display").innerHTML = guestsSlider.value;
+
+    if (guestsSlider.value && guestsSlider.value !== '0') { 
+        dom("guests-line-item").style.display = 'flex';
+    }
 };
 
-function updateHeaderDisplay(prefix) {
+function handleEventInput(inputElement, lineElement, contentElement, content) {
+    if (inputElement.value) { 
+        lineElement.style.display = 'flex';
+        contentElement.innerHTML = content;
+    };
+};
+
+function updateOptionDisplay(service, prefix, cost, dollarCost = true, summaryPrefix = false) {
+    var checkbox = dom(service + '-' + prefix);
+    var optionLineItem
+    var displayCost = cost;
+    
+    if (!summaryPrefix) { summaryPrefix = prefix }
+    if (dollarCost) { displayCost = "$" + displayCost };
+    optionLineItem = dom(service + '-' + summaryPrefix + "-option-line-item");
+
+    if (checkbox.checked) {
+        addOrShowOption(service, summaryPrefix, displayCost);
+
+        return cost;
+    } else {
+        if (optionLineItem) { optionLineItem.style.display = 'none' };
+
+        return 0;
+    }
+};
+
+function addOrShowOption(service, prefix, displayCost) {
+    var serviceSection = dom(service + "-service-section");
+    var optionLineItem = dom(service + '-' + prefix + "-option-line-item");
+    var costDisplay = dom(service + '-' + prefix + "-cost-display");
+
+    if (optionLineItem) {
+        console.log("prefix", prefix)
+        console.log("costDisplay", costDisplay)
+        console.log("displayCost", displayCost)
+
+        optionLineItem.style.display = 'flex';
+        costDisplay.innerHTML = displayCost;
+    } else {
+        // Create option line item
+        optionLineItem = document.createElement('div');
+        optionLineItem.id = service + '-' + prefix + '-option-line-item';
+        optionLineItem.classList.add('text-meta');
+        optionLineItem.style.display = 'flex';
+        optionLineItem.style.justifyContent = 'space-between'
+
+        // Create the selection display
+        var optionTitleDisplay = document.createElement('div');
+        optionTitleDisplay.id = service + '-' + prefix + '-title-display';
+        optionTitleDisplay.classList.add('text-meta');
+        optionTitleDisplay.textContent = toTitleCase(prefix);
+
+        // Create the cost display
+        var costDisplay = document.createElement('h6');
+        costDisplay.id = service + '-' + prefix + '-cost-display';
+        costDisplay.classList.add('heading-h6');
+        costDisplay.innerHTML = displayCost;
+        
+        optionLineItem.appendChild(optionTitleDisplay);
+        optionLineItem.appendChild(costDisplay);
+        serviceSection.appendChild(optionLineItem);
+    }
 }
 
-function handleTimeSlider(prefix, step) {
-    var input = eval(prefix + "Input");
-    var slider = eval(prefix + "Slider");
+function handleTimeSlider(service, prefix, step) {
+    var input = dom(service + '-' + prefix + "-input");
+    var slider = dom(service + '-' + prefix + "-slider");
     var time = slider.value * step;
 
     input.value = time;
 
-    updateLineItemDisplay(prefix, time, false);
-}
+    return updateOptionDisplay(service, prefix, time, false);
+};
 
-function handleAddOnSlider(prefix, cost, step = 1) {
-    console.log("prefix", prefix)
-
-    var input = eval(prefix + "Input");
-    var slider = eval(prefix + "Slider");
+function handleAddOnSlider(service, prefix, cost, step = 1, lineItem = true) {
+    var input = dom(service + '-' + prefix + "-input");
+    var slider = dom(service + '-' + prefix + "-slider");
 
     input.value = slider.value * step;
-    cost = cost * slider.value
+    cost = slider.value * step * cost;
 
-    updateLineItemDisplay(prefix, cost);
-}
+    if (lineItem) {
+        return updateOptionDisplay(service, prefix, cost);
+    } else {
+        return cost;
+    }
+};
 
-function updateLineItemDisplay(prefix, cost, dollarCost = true) {
-    var checkbox = eval(prefix);
-    var lineItem = eval(prefix + "LineItem");
-    var costDisplay = eval(prefix + "CostDisplay");
-
-    if (dollarCost) { cost = "$" + cost };
-
-    costDisplay.innerHTML = cost;
+function handleServiceSelection(prefix, baseCost, baseTime, optionCosts, addedTime = 0) {
+    var checkbox = dom(prefix);
+    var serviceSection = dom(prefix + "-service-section");
+    var optionCheckboxes = dom(prefix + "-options");
+    var cost = calculateServiceTotal(prefix, baseCost, baseTime, optionCosts, addedTime)
 
     if (checkbox.checked) {
-        lineItem.style.display = 'flex';
-    } else {
-        lineItem.style.display = 'none';
-    }
-}
+        addOrShowService(prefix, cost);
+        if(optionCheckboxes) { optionCheckboxes.style.display = 'block' };
 
-function calculateTotalCost() {
+        return cost;
+    } else {
+        if (serviceSection) { serviceSection.style.display = 'none' };
+        if(optionCheckboxes) { optionCheckboxes.style.display = 'none' };
+
+        return 0;
+    }
 };
+
+function addOrShowService(prefix, totalCost) {
+    var serviceSection = dom(prefix + "-service-section");
+    var costDisplay = dom(prefix + "-total-cost-display");
+    var formattedCost = "$" + totalCost;
+
+    if (serviceSection) {
+        serviceSection.style.display = 'block';
+        costDisplay.innerHTML = formattedCost;
+    } else {
+        //Create service section
+        serviceSection = document.createElement("div");
+        serviceSection.id = prefix + "-service-section";
+        serviceSection.className = "hidable-service-section"
+        serviceSection.style.display = 'block';
+
+        // Create service line item
+        var serviceLineItem = document.createElement('div');
+        serviceLineItem.id = prefix + '-service-line-item';
+        serviceLineItem.classList.add('hidable-service-line-item');
+        serviceLineItem.style.display = 'flex';
+        serviceLineItem.style.justifyContent = 'space-between'
+
+         // Create heading for service
+        var serviceHeading = document.createElement('h4');
+        // serviceHeading.classList.add('text-uppercase');
+        serviceHeading.textContent = toTitleCase(prefix) + ' Total';
+        
+        // Create the cost display
+        var costDisplay = document.createElement('h6');
+        costDisplay.id = prefix + '-total-cost-display';
+        costDisplay.classList.add('heading-h6');
+        costDisplay.innerHTML = formattedCost;
+
+        serviceLineItem.appendChild(serviceHeading);
+        serviceLineItem.appendChild(costDisplay);
+        serviceSection.appendChild(serviceLineItem);
+        dom('services-summary').appendChild(serviceSection);
+
+        // updateOptionDisplay(prefix, prefix, cost, true, prefix + "-total")
+    }
+};
+
+function toTitleCase(str) {
+  return str.replace(/-/g, ' ')                // Replace hyphens with spaces
+            .replace(/\b\w/g, function(char) {  // Capitalize the first letter of each word
+              return char.toUpperCase();
+            });
+};
+
+function calculateServiceTotal(prefix, baseCost, baseTime, optionCosts, addedTime = 0) {
+    var costWithAddOns;
+    var costMultiplier = 1;
+
+    costMultiplier = (baseTime + addedTime) / baseTime;
+    costWithAddOns = baseCost + optionCosts.reduce((partialSum, a) => partialSum + a, 0)
+
+    return Math.floor(costWithAddOns * costMultiplier);
+};
+
+calculateChange();
+
 </script>
+<script src="https://cdn.jsdelivr.net/gh/bencappello/book-santa-barbara/js/dateTimePickers.js?"></script>

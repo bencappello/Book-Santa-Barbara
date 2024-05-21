@@ -1,0 +1,211 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js" integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/timepicker@1.14.1/jquery.timepicker.min.js"></script>
+<script>
+
+// Define the Google Calendar ID for the calendar being used
+const calendarID = "c_18830fm7jfvm6i9ol6had48r9ourq@resource.calendar.google.com";
+
+// Function to get DOM element by ID
+function dom(id) {
+    return document.getElementById(id);
+};
+
+// FORM INPUTS
+
+// Get form element by ID
+var brettCoRequestForm = dom("brett-co-request-form");
+
+// Get input elements related to event info
+var eventNameInput = dom("event-name-input");
+var eventDateInput = dom("event-date-input");
+var startTimeInput = dom("start-time-input");
+var endTimeInput = dom("end-time-input");
+var guestsSlider = dom("guests-slider");
+var guestsInput = dom("guest-count-input");
+
+// EVENT SUMMARY
+
+// Get elements related to event summary
+var dateLineItem = dom("date-line-item");
+var startLineItem = dom("start-line-item");
+var endLineItem = dom("end-line-item");
+var guestsLineItem = dom("guests-line-item");
+
+var eventNameDisplay = dom("event-name-display");
+var eventDateDisplay = dom("event-date-display");
+var startTimeDisplay = dom("start-time-display");
+var endTimeDisplay = dom("end-time-display");
+var guestCountDisplay = dom("guest-count-display");
+
+// SET DEFAULTS
+
+// Set initial display style for eventNameDisplay
+eventNameDisplay.style.display = 'none';
+
+// Set initial values for guests input and slider
+guestsInput.value = guestsSlider.value = 0;
+dom("silent-disco-slider").value = 8;
+dom("silent-disco-input").value = 8 * 5;
+
+// Set defaults for sliders
+setSliderDefaults([
+    "custom-songs",
+    "cocktail-hour-trio-added-time",
+    "cocktail-hour-full-band-added-time",
+    "dinner-added-time",
+    "horns",
+    "dj-added-time",
+    "dj-live-dances",
+    "band-added-players",
+    "band-added-time"
+]);
+
+// Function to set default values for sliders
+function setSliderDefaults(prefixes, value = 0) {
+    prefixes.forEach((prefix) => {
+        dom(prefix + "-input").value = dom(prefix + "-slider").value = value;
+    });
+};
+
+// Total details display
+dom("total-cost-display").innerHTML = "$0";
+dom("deposit-display").innerHTML = "$0";
+
+// Event listeners for form changes
+brettCoRequestForm.onchange = calculateChange;
+brettCoRequestForm.oninput = calculateChange;
+
+// Calculation function
+/**
+ * Calculates the total cost and deposit for an event based on selected options.
+ */
+function calculateChange() {
+    console.log("calculateChange");
+
+    // Initialize variables
+    var eventDateObject = new Date(eventDateInput.value);
+    var deposit;
+    var totalCost;
+
+    // Calculate total cost based on selected options
+    totalCost = (
+        handleCategorySelection(
+            "ceremony",
+            650,
+            60,
+            [
+                updateLineItemDisplay("ceremony-sound", 350),
+                updateLineItemDisplay("remote-power", 200),
+                handleAddOnSlider("custom-songs", 100, 1),
+                updateLineItemDisplay("beach-ceremony", 200)
+            ]
+        )
+
+        // Add cost for other categories
+        // ...
+
+    );
+
+    // Calculate deposit
+    deposit = Math.floor(totalCost * 0.2);
+
+    // Update display with total cost and deposit
+    dom("total-cost-display").innerHTML = "$" + totalCost;
+    dom("total-cost-input").value = totalCost;
+    dom("deposit-display").innerHTML = "$" + deposit;
+    dom("deposit-input").value = deposit;
+
+    // Update event info display
+    // ...
+};
+
+// Function to handle event input
+function handleEventInput(inputElement, lineElement, contentElement, content) {
+    if (inputElement.value) { 
+        lineElement.style.display = 'flex';
+        contentElement.innerHTML = content;
+    };
+}
+
+// Function to update line item display
+function updateLineItemDisplay(prefix, cost, dollarCost = true, summaryPrefix = false) {
+    var checkbox = dom(prefix);
+    var lineItem
+    var displayCost = cost;
+    
+    if (!summaryPrefix) { summaryPrefix = prefix }
+    if (dollarCost) { displayCost = "$" + displayCost };
+
+    lineItem = dom(summaryPrefix + "-line-item");
+    dom(summaryPrefix + "-cost-display").innerHTML = displayCost;
+
+    if (checkbox.checked) {
+        lineItem.style.display = 'flex';
+        return cost;
+    } else {
+        lineItem.style.display = 'none';
+        return 0;
+    }
+};
+
+// Function to handle time slider
+function handleTimeSlider(prefix, step) {
+    var input = dom(prefix + "-input");
+    var slider = dom(prefix + "-slider");
+    var time = slider.value * step;
+
+    input.value = time;
+
+    return updateLineItemDisplay(prefix, time, false);
+};
+
+// Function to handle add-on slider
+function handleAddOnSlider(prefix, cost, step = 1, lineItem = true) {
+    var input = dom(prefix + "-input");
+    var slider = dom(prefix + "-slider");
+
+    input.value = slider.value * step;
+    cost = slider.value * step * cost;
+
+    if (lineItem) {
+        return updateLineItemDisplay(prefix, cost);
+    } else {
+        return cost;
+    }
+
+};
+
+// Function to handle category selection
+function handleCategorySelection(prefix, baseCost, baseTime, lineItems, addedTime = 0) {
+    var checkbox = dom(prefix);
+    var section = dom(prefix + "-summary-section");
+    var options = dom(prefix + "-options");
+    var cost = calculateCategoryTotal(prefix, baseCost, baseTime, lineItems, addedTime)
+
+    updateLineItemDisplay(prefix, cost, true, prefix + "-total")
+
+    if (checkbox.checked) {
+        section.style.display = 'block';
+        if(options) { options.style.display = 'block' };
+        return cost;
+    } else {
+        section.style.display = 'none';
+        if(options) { options.style.display = 'none' };
+        return 0;
+    }
+};
+
+// Function to calculate category total cost
+function calculateCategoryTotal(prefix, baseCost, baseTime, lineItems, addedTime = 0) {
+    var costWithAddOns;
+    var costMultiplier = 1;
+
+    costMultiplier = (baseTime + addedTime) / baseTime;
+    costWithAddOns = baseCost + lineItems.reduce((partialSum, a) => partialSum + a, 0)
+
+    return Math.floor(costWithAddOns * costMultiplier);
+};
+
+</script>
+<script src="https://cdn.jsdelivr.net/gh/bencappello/book-santa-barbara/js/dateTimePickers.js?"></script>
