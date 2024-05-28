@@ -6,7 +6,6 @@
 
 //Add the ID for the calendar for this vendor/venue
 const calendarID = "c_18830fm7jfvm6i9ol6had48r9ourq@resource.calendar.google.com";
-console.log("main file, calendarID = ", calendarID)
 
 //The name of the form ID as it appears in webflow
 const form = dom("form-id");
@@ -39,7 +38,7 @@ function services() {
             'serviceName': "service-title-4",
             'type': 'per-unit',
             'cost': 5,
-            'step': 5
+            'sliderStep': 5
         })
 
         +
@@ -291,10 +290,10 @@ function servicePerTimePerGuest(serviceName, costPerTimePerGuest, timeStep = 1, 
 //CONFIG OPTIONS
 var servicePropertyOptions = {
     'serviceName': "SERVICE-NAME",
-    'type': ['no-cost', 'fixed', 'per-unit', 'per-two-units']
+    'type': ['no-cost', 'fixed', 'per-unit', 'per-two-units'],
     'cost': 0,
-    'slider-step': 1,
-    'slider-step-2': 1,
+    'sliderStep': 1,
+    'sliderStep2': 1,
     'global': ['time', 'guests', 'time-and-guests'],
     'options': []
 }
@@ -302,20 +301,20 @@ var servicePropertyOptions = {
 //SERVICE FUNCTION
 function service(config = {}) {
     var defaults = {
-        'serviceName': '',
+        'service-name': '',
         'type': 'no-cost',
         'cost': 0,
-        'slider-step': 1,
-        'slider-step-2': 1,
+        'sliderStep': 1,
+        'sliderStep2': 1,
         'global': false,
         'options': []
     };
     var properties = Object.assign(defaults, config);
     var serviceCost = 0;
-    var input1 = dom(serviceName + "-input");
-    var input2 = dom(serviceName + "-input-2");
-    var slider1Value = dom(serviceName + "-slider") ? dom(serviceName + "-slider").value : 1;
-    var slider2Value = dom(serviceName + "-slider-2") ? dom(serviceName + "-slider-2").value : 1;
+    var input1 = dom(properties.serviceName + "-input");
+    var input2 = dom(properties.serviceName + "-input-2");
+    var slider1Value = dom(properties.serviceName + "-slider") ? dom(properties.serviceName + "-slider").value : 1;
+    var slider2Value = dom(properties.serviceName + "-slider-2") ? dom(properties.serviceName + "-slider-2").value : 1;
     var time;
 
     //Fixed cost
@@ -328,7 +327,7 @@ function service(config = {}) {
         if (input1) { input1.value = slider1Value }
         if (input2) { input2.value = slider2Value }
 
-        serviceCost = properties.cost * sliderValue * properties['slider-step'] * slider2Value * properties['slider-step-2'];
+        serviceCost = properties.cost * slider1Value * properties.sliderStep * slider2Value * properties.sliderStep2;
     }
 
     if (properties.global) {
@@ -456,5 +455,13 @@ function calculateHoursBetween(startTime, endTime) {
   return diffInMinutes / 60;
 }
 
+window.onload = function() {
+    var script = document.createElement('script');
+    script.src = "https://cdn.jsdelivr.net/gh/bencappello/book-santa-barbara/js/dateTimePickers.js?";
+    script.onload = function() {
+        console.log('Script loaded and executed');
+    };
+    document.body.appendChild(script);
+};
+
 </script>
-<script src="https://cdn.jsdelivr.net/gh/bencappello/book-santa-barbara/js/dateTimePickers.js?"></script>
