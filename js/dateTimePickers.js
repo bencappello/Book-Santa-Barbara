@@ -1,5 +1,5 @@
 //Google Calendar
-console.log("timepickers, calendarID)
+console.log("timepickers, calendarID")
 const googleURL = "https://www.googleapis.com/calendar/v3/calendars/" + calendarID + "/events?key=" + apiKey;
 
 var events = {};
