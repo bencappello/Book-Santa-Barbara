@@ -4,59 +4,214 @@
 <script src='https://html2canvas.hertzen.com/dist/html2canvas.min.js'></script>
 <script>
 
+//------------------------------------STATIC CODE DO NOT EDIT ABOVE THIS LINE ----------------------------------------------------
+
 //Add the ID for the calendar for this vendor/venue
 const calendarID = "c_18830fm7jfvm6i9ol6had48r9ourq@resource.calendar.google.com";
 
 //The name of the form ID as it appears in webflow
 const form = dom("form-id");
 
+//This is where you configure services and options. See below this for documentation of what you can put here.
 function services() {
-    return(
-        serviceFixedPrice("service-title-1", 500)
-
-        +
-
-        serviceFixedPrice("service-title-2", 400,
-            [
-                optionFixedPrice("service-title-2", "fixed-price-option", 300),
-                optionPerUnit("service-title-2", "per-unit-option", 100, 1)
-            ]
-        )
-
-        +
-
-        serviceNoBasePrice("service-title-3",
-            [
-                optionGlobalTime("service-title-3", "option-global-time", 1000),
-                optionGlobalGuests("service-title-3", "option-global-guests", 1200)
-            ]
-        )
-
-        +
-
+    return [
         service({
-            'serviceName': "service-title-4",
+            'serviceName': 'service-title-1',
+            'type': 'fixed',
+            'cost': 500
+        }),
+        service({
+            'serviceName': 'service-title-2',
+            'type': 'fixed',
+            'cost': 600,
+            'options': [
+                option({
+                    'serviceName': 'service-title-2',
+                    'optionName': 'fixed-price-option',
+                    'type': 'fixed',
+                    'cost': 400
+                }),
+                option({
+                    'serviceName': 'service-title-2',
+                    'optionName': 'per-unit-option',
+                    'type': 'per-unit',
+                    'cost': 100,
+                    'sliderStep': 1
+                })
+            ]
+        }),
+        service({
+            'serviceName': 'service-title-3',
+            'type': 'no-cost',
+            'options': [
+                option({
+                    'serviceName': 'service-title-3',
+                    'optionName': 'option-global-time',
+                    'type': 'global-time',
+                    'cost': 1000
+                }),
+                option({
+                    'serviceName': 'service-title-3',
+                    'optionName': 'option-global-guests',
+                    'type': 'global-guests',
+                    'cost': 1200
+                })
+            ]
+        }),
+        service({
+            'serviceName': 'service-title-4',
             'type': 'per-unit',
             'cost': 5,
             'sliderStep': 5
-        })
-
-        +
-
+        }),
         service({
-            'serviceName': "service-title-5",
+            'serviceName': 'service-title-5',
             'cost': 50,
-            'global': 'time-and-guests',
+            'type': 'global-time-and-guests',
             'options': [
-                optionGlobalTimeAndGuests("service-title-5", "option-global-time-and-guests", 10)
+                option({
+                        'serviceName': 'service-title-5',
+                        'optionName': 'option-global-time-and-guests',
+                        'type': 'global-time-and-guests',
+                        'cost': 10
+                    })
             ]
+        }),
+        service({
+            'serviceName': 'service-title-6',
+            'type': 'per-unit',
+            'cost': 50,
+            'sliderStep': 0.5,
+            'sliderStep2': 1
+        }),
+        service({
+            'serviceName': 'service-title-7',
+            'type': 'global-guests',
+            'guestTiers': {
+                20: 1000,
+                50: 2000,
+                100: 3000,
+                200: 4000
+            }
+        }),
+        service({
+            'serviceName': 'service-title-8',
+            'type': 'per-unit',
+            'sliderStep': 5,
+            'guestTiers': {
+                20: 1000,
+                50: 2000,
+                200: 4000,
+                100: 3000
+            }
+        }),
+        service({
+            'serviceName': 'service-title-9',
+            'type': 'fixed',
+            'dayTiers': {
+                'mon': 1000,
+                'tue': 1000,
+                'wed': 1000,
+                'thu': 1000,
+                'fri': 2000,
+                'sat': 3000,
+                'sun': 2500
+            },
+        }),
+        service({
+            'serviceName': 'service-title-10',
+            'type': 'per-unit',
+            'dayTiers': {
+                'mon': 100,
+                'tue': 100,
+                'wed': 100,
+                'thu': 100,
+                'fri': 200,
+                'sat': 300,
+                'sun': 250
+            },
         })
-    
-        +
-
-        servicePerTimePerGuest("service-title-6", 50, 0.5, 1)
-    )
+    ]
 }
+
+
+//SERVICE/OPTION CONFIG DOCUMENTATION
+const servicePropertyOptions = {
+    //MANDATORY for all services and options. Make this equal to the ID of the checkbox for this service in webflow.
+    //This should ideally be all lower case connected with hyphens. In this documenation example it is called 'service-name'.
+    //In reality you would call this 'ceremony-sound' or 'kiva-courtyard' or something like that.
+    'serviceName': "service-name",
+
+     //MANDATORY for all OPTIONS only. Do not add this for a service. Make this equal to the ID of the checkbox for this option in webflow.
+     //This should ideally be all lower case connected with hyphens. In this documenation example it is called 'option-name'.
+     //In reality you would call this 'beach-ceremony' or 'additional-guitarist' or something like that.
+    'optionName': "option-name",
+
+    //MANDATORY for all services and options. This lists all the possible types you can put here.
+    //Per unit or per-two-units should be used for any service or option that has a specific slider associaited with it.
+    //This can be for units (E.g. headphones), time (E.g. hours or minutes), guests, etc.
+    //per-two-units would be for instance for a per person per hour service or option.
+    //The global options mean that it is related to the guest count, time, or both for the overall event.
+    'type': [
+        'no-cost',
+        'fixed',
+        'per-unit',
+        'per-two-units',
+        'global-time',
+        'global-guests',
+        'global-time-and-guests'
+    ],
+
+    //OPTIONAL for services or options. This should be present unless the service or option is 'no-cost' or if it involves 'guestTiers' or 'dayTiers'.
+    //In those cases you don't include this. In cases where the price is 'fixed' this is the fixed price.
+    //In cases where the cost scales with some unit (E.g. headphones, guests, time) this will be the per unit cost.
+    'cost': 0,
+
+    //OPTIONAL for services or options. If you include this you should not include the 'cost' attrubute above. This replaces that. This can be used regardless of whether the guest count is based on the global event guests or by an independent guest slider. You can put as many tiers as you want. The first nummber is the guest count, second number the price. The system will apply the given price for all guest counts less than or equal to the given guest count. Below is an example case. In that example guest counts 0 - 20 --> price $1000, guest counts 21 - 50 --> price $2000, guest counts 51 - 100 --> price $3000, guest counts over 100 --> price $4000. This is 200 is the highest guest count listed so for all guest counts above that the price is still $4000.
+    'guestTiers': {
+        20: 1000,
+        50: 2000,
+        100: 3000,
+        200: 4000
+    },
+
+    //OPTIONAL for services or options. If you include this you should not include the 'cost' attrubute above.
+    //This replaces that. This will respond to the day of week for the event as indicated by the customer when they choose the event date.
+    //You must list each day of the week here similar to the example below.
+    'dayTiers': {
+        'mon': 1000,
+        'tue': 1000,
+        'wed': 1000,
+        'thu': 1000,
+        'fri': 2000,
+        'sat': 3000,
+        'sun': 2500
+    },
+
+    //OPTIONAL for services or options that have a type of 'per-unit' or 'per-two-units'. Do not include this for any other type. This determines the step size for the related slider. So if the slider is for minutes and you want it to jump by 15 minute intervals you put 15 here. You do not put 15 in webflow. When you create the slider there you always list the 'step' attribute as 1. If you don't include this attribute here the default will always be 1.
+    'sliderStep': 1,
+
+    //OPTIONAL, only for services or options that have a type of 'per-two-units'. Same as 'sliderStep' above.
+    'sliderStep2': 1,
+
+    //OPTIONAL for services only. This is where you list each option related to the service.
+    'options': []
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //------------------------------------STATIC CODE DO NOT EDIT BELOW THIS LINE ----------------------------------------------------
 
@@ -65,7 +220,7 @@ function dom(id) {
 };
 
 // event info
-var guestsSlider = dom("guests-slider");
+var globalGuestsSlider = dom("guests-slider");
 var guestsInput = dom("guest-count-input");
 
 //total details
@@ -78,14 +233,12 @@ form.oninput = calculateChange;
 
 //Calculation
 function calculateChange() {
-    console.log("calculateChange");
-
     var eventDateObject = new Date(dom("event-date-input").value);
     var deposit;
     var totalCost;
 
     //Price element updating
-    totalCost = services();
+    totalCost = servicesTotal();
 
     deposit = Math.floor(totalCost * 0.2);
     dom("total-cost-display").innerHTML = "$" + totalCost;
@@ -127,10 +280,10 @@ function calculateChange() {
         dom("end-time-input").value.replace(":00", ":00 ")
     );
 
-    guestsInput.value = guestsSlider.value;
-    dom("guest-count-display").innerHTML = guestsSlider.value;
+    guestsInput.value = globalGuestsSlider.value;
+    dom("guest-count-display").innerHTML = globalGuestsSlider.value;
 
-    if (guestsSlider.value && guestsSlider.value !== '0') { 
+    if (globalGuestsSlider.value && globalGuestsSlider.value !== '0') { 
         dom("guests-line-item").style.display = 'flex';
     }
 };
@@ -143,59 +296,145 @@ function handleEventInput(inputElement, lineElement, contentElement, content) {
 };
 
 
+//------------------------------------FUNCTIONS ----------------------------------------------------
 
-//OPTIONS exposed
-function optionNoPrice(serviceName, optionName) {
-    return handleOption(serviceName, optionName, 0);
+
+function calculateBaseDayCost() {
+  var eventDate = new Date(Date.parse(eventDateInput.value));
+  var day = eventDate.getDay();
+
+  if (day === 5 || day === 0 ) {
+  	return 2500;
+  } else if (day === 6) {
+  	return 3000;
+  } else {
+  	return 1500;
+  }
+};
+
+
+
+//SERVICE FUNCTION
+function servicesTotal() {
+    return services().reduce((partialSum, a) => partialSum + a, 0);
+};
+
+function service(config = {}) {
+    config['itemType'] = 'service';
+
+    return handleItem(config);
 }
 
-function optionFixedPrice(serviceName, optionName, optionCost) {
-    return handleOption(serviceName, optionName, optionCost);
+function option(config = {}) {
+    config['itemType'] = 'option';
+    
+    return handleItem(config);
 }
 
-//Per unit, time, person
-function optionPerUnit(serviceName, optionName, costPerUnit, step = 1) {
-    var input = dom(serviceName + '-' + optionName + "-input");
-    var slider = dom(serviceName + '-' + optionName + "-slider");
-    var cost = slider.value * step * costPerUnit;
+function handleItem(config = {}) {
+    var defaults = {
+        'serviceName': '',
+        'optionName': '',
+        'type': 'no-cost',
+        'cost': 0,
+        'guestTiers': false,
+        'dayTiers': false,
+        'sliderStep': 1,
+        'sliderStep2': 1,
+        'options': []
+    };
+    var properties = Object.assign(defaults, config);
+    var itemCost = 0;
+    var optionName = properties.itemType == 'option' ? '-' + properties.optionName : '';
+    var input1 = dom(properties.serviceName + optionName + "-input");
+    var input2 = dom(properties.serviceName + optionName + "-input-2");
+    var slider1Value = dom(properties.serviceName + optionName + "-slider") ? dom(properties.serviceName + optionName + "-slider").value * properties.sliderStep : 1;
+    var slider2Value = dom(properties.serviceName + optionName + "-slider-2") ? dom(properties.serviceName + optionName + "-slider-2").value * properties.sliderStep2 : 1;
+    var globalTime = calculateHoursBetween(dom("start-time-input").value, dom("end-time-input").value);
 
-    input.value = slider.value * step;
+    if (properties.dayTiers) {
+        let numberToDay = {
+            0: 'sun',
+            1:'mon',
+            2: 'tue',
+            3: 'wed',
+            4: 'thu',
+            5: 'fri',
+            6:'sat'
+        };
+        let eventDate = new Date(Date.parse(dom("event-date-input").value));
+        let dayOfWeekNumber = eventDate.getDay();
+        let dayName = numberToDay[dayOfWeekNumber];
+        
+        properties.cost = properties.dayTiers[dayName];
+        
+        console.log('eventDate', eventDate)
+        console.log('dayOfWeekNumber', dayOfWeekNumber)
+        console.log('dayName', dayName)
+        console.log('properties.dayTiers[dayName]', properties.dayTiers[dayName])
+        console.log('properties.cost', properties.cost)
+    }
 
-    return handleOption(serviceName, optionName, cost);
+    //Fixed cost
+    if (properties.type == 'fixed') {
+        itemCost = properties.cost;
+    }
+
+    //Per unit(s) cost
+    if (properties.type == 'per-unit') {
+        if (input1) { input1.value = slider1Value }
+        if (input2) { input2.value = slider2Value }
+
+        itemCost = properties.cost * slider1Value * slider2Value;
+    }
+
+    //Global types
+    if (properties.type == 'global-time') {
+        itemCost = globalTime * properties.cost;
+    }
+    if (properties.type == 'global-guests') {
+        itemCost = globalGuestsSlider.value * properties.cost;
+    }
+    if (properties.type == 'global-time-and-guests') {
+        itemCost = globalGuestsSlider.value * globalTime * properties.cost;
+    }
+
+    //Guest Tiers
+    if (properties.guestTiers) {
+        let guestValueToUse = properties.type == 'global-guests' ? globalGuestsSlider.value : slider1Value;
+
+        let sortedGuestTiers = Object.keys(properties.guestTiers).map(key => parseInt(key)).sort((a, b) => a - b);
+        itemCost = properties.guestTiers[sortedGuestTiers.at(-1)];
+        
+        for (let i = 0; i < sortedGuestTiers.length; i++) {
+            let key = sortedGuestTiers[i];
+            
+            if (guestValueToUse <= key) {
+                itemCost = properties.guestTiers[key];
+                break;
+            }
+        }
+    }
+    
+    if (properties.itemType == 'service') {
+        return handleService(properties.serviceName, itemCost, 1, properties.options);
+    } else if (properties.itemType == 'option') {
+        return handleOption(properties.serviceName, properties.optionName, itemCost);
+    } else {
+        try {
+            throw new Error(`Not specified if ${properties.serviceName} ${properties.optionName} is a Service or an Option`);
+        } catch (e) {
+            console.error(e.message); // Output: Something went wrong!
+        }
+    }
 };
 
-function optionGlobalTime(serviceName, optionName, costPerHour) {
-    var hours = calculateHoursBetween(dom("start-time-input").value, dom("end-time-input").value);
-    var cost = hours * costPerHour;
-
-    return handleOption(serviceName, optionName, cost);
-};
-
-function optionGlobalGuests(serviceName, optionName, costPerGuest) {
-    var cost = guestsSlider.value * costPerGuest;
-
-    return handleOption(serviceName, optionName, cost);
-};
-
-function optionGlobalTimeAndGuests(serviceName, optionName, costPerTimePerGuest) {
-    var hours = calculateHoursBetween(dom("start-time-input").value, dom("end-time-input").value);
-    var cost = guestsSlider.value * hours * costPerTimePerGuest;
-
-    return handleOption(serviceName, optionName, cost);
-};
 
 
-//Unexposed functions
-function handleTimeSlider(serviceName, optionName, step) {
-    var input = dom(serviceName + '-' + optionName + "-input");
-    var slider = dom(serviceName + '-' + optionName + "-slider");
-    var time = slider.value * step;
 
-    input.value = time;
 
-    return handleOption(serviceName, optionName, time, false);
-};
-
+//UNEXPOSED FUNCTIONS
+//OPTIONS
 function handleOption(serviceName, optionName, cost, dollarCost = true, showLineItem = true, summaryPrefix = false) {
     var checkbox = dom(serviceName + '-' + optionName);
     var optionLineItem
@@ -251,102 +490,7 @@ function addOrShowOption(serviceName, optionName, displayCost) {
     }
 }
 
-
-
-
-//SERVICES Exposed
-function serviceNoBasePrice(serviceName, optionCosts = []) {
-    return handleService(serviceName, 0, 1, optionCosts)
-}
-
-function serviceFixedPrice(serviceName, baseCost, optionCosts = []) {
-    return handleService(serviceName, baseCost, 1, optionCosts)
-}
-
-//Per unit, time, person
-function servicePerUnit(serviceName, costPerUnit, step = 1, optionCosts = []) {
-    var input = dom(serviceName + "-input");
-    var slider = dom(serviceName + "-slider");
-    var cost = slider.value * step * costPerUnit;
-
-    input.value = slider.value * step;
-
-    return handleService(serviceName, cost, 1, optionCosts);
-};
-
-function servicePerTimePerGuest(serviceName, costPerTimePerGuest, timeStep = 1, guestsStep = 1, optionCosts = []) {
-    var timeInput = dom(serviceName + "-time-input");
-    var guestsInput = dom(serviceName + "-guests-input");
-    var timeSlider = dom(serviceName + "-time-slider");
-    var guestsSlider = dom(serviceName + "-guests-slider");
-    var cost = timeSlider.value * timeStep * guestsSlider.value * guestsStep * costPerTimePerGuest;
-
-    timeInput.value = timeSlider.value * timeStep;
-    guestsInput.value = guestsSlider.value * guestsStep;
-
-    return handleService(serviceName, cost, 1, optionCosts);
-};
-
-//CONFIG OPTIONS
-var servicePropertyOptions = {
-    'serviceName': "SERVICE-NAME",
-    'type': ['no-cost', 'fixed', 'per-unit', 'per-two-units'],
-    'cost': 0,
-    'sliderStep': 1,
-    'sliderStep2': 1,
-    'global': ['time', 'guests', 'time-and-guests'],
-    'options': []
-}
-
-//SERVICE FUNCTION
-function service(config = {}) {
-    var defaults = {
-        'service-name': '',
-        'type': 'no-cost',
-        'cost': 0,
-        'sliderStep': 1,
-        'sliderStep2': 1,
-        'global': false,
-        'options': []
-    };
-    var properties = Object.assign(defaults, config);
-    var serviceCost = 0;
-    var input1 = dom(properties.serviceName + "-input");
-    var input2 = dom(properties.serviceName + "-input-2");
-    var slider1Value = dom(properties.serviceName + "-slider") ? dom(properties.serviceName + "-slider").value : 1;
-    var slider2Value = dom(properties.serviceName + "-slider-2") ? dom(properties.serviceName + "-slider-2").value : 1;
-    var time;
-
-    //Fixed cost
-    if (properties.type == 'fixed') {
-        serviceCost = properties.cost;
-    }
-
-    //Per unit(s) cost
-    if (properties.type == 'per-unit') {
-        if (input1) { input1.value = slider1Value }
-        if (input2) { input2.value = slider2Value }
-
-        serviceCost = properties.cost * slider1Value * properties.sliderStep * slider2Value * properties.sliderStep2;
-    }
-
-    if (properties.global) {
-        time = calculateHoursBetween(dom("start-time-input").value, dom("end-time-input").value);
-
-        if(properties.global == 'time-and-guests') {
-            serviceCost = guestsSlider.value * time * properties.costPerInputs;
-        } else if (properties.global == 'time') {
-            serviceCost = time * properties.costPerInputs;
-        } else {
-            serviceCost = guestsSlider.value * properties.costPerInputs;
-        }
-    }
-    
-
-    return handleService(properties.serviceName, serviceCost, 1, properties.options);
-};
-
-//Unexposed functions
+//SERVICES 
 function handleService(serviceName, baseCost, baseTime, optionCosts, addedTime = 0) {
     var checkbox = dom(serviceName);
     var serviceSection = dom(serviceName + "-service-section");
@@ -424,8 +568,7 @@ function calculateServiceTotal(serviceName, baseCost, baseTime, optionCosts, add
     return Math.floor(costWithAddOns * costMultiplier);
 };
 
-calculateChange();
-
+//Global Time Parsing Functions
 function parseTimeString(timeString) {
   const [time, modifier] = timeString.split(/(am|pm)/);
   let [hours, minutes] = time.split(':').map(Number);
@@ -455,13 +598,17 @@ function calculateHoursBetween(startTime, endTime) {
   return diffInMinutes / 60;
 }
 
+
+//After window loads
 window.onload = function() {
     var script = document.createElement('script');
+
+    calculateChange();
+
     script.src = "https://cdn.jsdelivr.net/gh/bencappello/book-santa-barbara/js/dateTimePickers.js?";
     script.onload = function() {
         console.log('Script loaded and executed');
     };
     document.body.appendChild(script);
 };
-
 </script>
