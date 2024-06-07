@@ -1,14 +1,3 @@
-
-
-
-
-
-
-
-
-
-//------------------------------------STATIC CODE DO NOT EDIT BELOW THIS LINE ----------------------------------------------------
-
 function dom(id) {
     return document.getElementById(id);
 };
@@ -20,10 +9,6 @@ var guestsInput = dom("guest-count-input");
 //total details
 dom("total-cost-display").innerHTML = "$0" 
 dom("deposit-display").innerHTML = "$0";
-
-//onchange
-form.onchange = calculateChange;
-form.oninput = calculateChange;
 
 //Calculation
 function calculateChange() {

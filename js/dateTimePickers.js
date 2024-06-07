@@ -3,6 +3,10 @@ const googleURL = "https://www.googleapis.com/calendar/v3/calendars/" + calendar
 
 var events = {};
 var eventsAsStrings = {};
+
+//onchange
+form.onchange = calculateChange;
+form.oninput = calculateChange;
   
 fetch(googleURL)
   .then((response) => response.json())
