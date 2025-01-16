@@ -17,7 +17,7 @@ const form = dom("dart-garden-form");
 function services() {
     return [
         service({
-            'serviceName': 'venue',
+            'serviceName': 'lspace-rental',
             'type': 'fixed',
             'dayTiers': {
                 'mon': 3500,
@@ -30,8 +30,8 @@ function services() {
             },
             'options': [
                 option({
-                        'serviceName': 'venue',
-                        'optionName': 'additional-fee',
+                        'serviceName': 'space-rental',
+                        'optionName': 'space-buyout-fee',
                         'type': 'dart-garden-buyout-fee'
                     })
             ]

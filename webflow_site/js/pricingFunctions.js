@@ -274,6 +274,7 @@ function calculateDartGardenBuyoutFee() {
 
 
 function handleMandatoryFee(serviceName, optionName, cost, dollarCost = true, showLineItem = true, summaryPrefix = false) {
+    var serviceSection = dom(serviceName + "-service-section");
     var optionLineItem
     var displayCost = cost;
     
@@ -281,7 +282,7 @@ function handleMandatoryFee(serviceName, optionName, cost, dollarCost = true, sh
     if (dollarCost) { displayCost = "$" + displayCost };
     optionLineItem = dom(serviceName + '-' + summaryPrefix + "-option-line-item");
 
-    if (cost > 0) {
+    if (serviceSection &&cost > 0) {
         addOrShowMandatoryFeeLineItem(serviceName, summaryPrefix, displayCost);
 
         return cost;
