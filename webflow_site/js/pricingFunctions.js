@@ -172,6 +172,18 @@ function handleItem(config = {}) {
         itemCost = globalGuestsSlider.value * globalTime * properties.cost;
     }
 
+    //Working Hours Fee
+    if (properties.type == 'dart-garden-buyout-fee') {
+        itemCost = calculateDartGardenBuyoutFee();
+    }
+    if (properties.type == 'global-guests') {
+        itemCost = globalGuestsSlider.value * properties.cost;
+    }
+    if (properties.type == 'global-time-and-guests') {
+        itemCost = globalGuestsSlider.value * globalTime * properties.cost;
+    }
+
+
     //Guest Tiers
     if (properties.guestTiers) {
         let guestValueToUse = properties.type == 'global-guests' ? globalGuestsSlider.value : slider1Value;
@@ -192,7 +204,11 @@ function handleItem(config = {}) {
     if (properties.itemType == 'service') {
         return handleService(properties.serviceName, itemCost, 1, properties.options);
     } else if (properties.itemType == 'option') {
-        return handleOption(properties.serviceName, properties.optionName, itemCost);
+        if (properties.type == 'dart-garden-buyout-fee') {
+            return handleMandatoryFee(properties.serviceName, properties.optionName, itemCost);
+        } else {
+            return handleOption(properties.serviceName, properties.optionName, itemCost);
+        }  
     } else {
         try {
             throw new Error(`Not specified if ${properties.serviceName} ${properties.optionName} is a Service or an Option`);
@@ -201,6 +217,121 @@ function handleItem(config = {}) {
         }
     }
 };
+
+
+//Dart Garden Buyour Fee
+function calculateDartGardenBuyoutFee() {
+    // 1) Get the event date
+    const eventDateString = dom("event-date-input").value;
+    if (!eventDateString) return 0; // no date chosen => no fee
+
+    const eventDate = new Date(eventDateString);
+    const dayOfWeek = eventDate.getDay(); 
+    // dayOfWeek: 0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat
+
+    // 2) Determine venue’s working hours for the given day
+    //    Monday–Thursday => 7 AM – 16 (4 PM)
+    //    Friday–Sunday   => 7 AM – 17 (5 PM)
+    let venueStartHour = 7;
+    let venueEndHour = (dayOfWeek === 0 || dayOfWeek === 5 || dayOfWeek === 6) ? 17 : 16;
+
+    // 3) Parse the event’s start/end times in 24-hour format
+    const startTimeString = dom("start-time-input").value;
+    const endTimeString   = dom("end-time-input").value;
+
+    const start = parseTimeString(startTimeString); // => { hours, minutes }
+    const end   = parseTimeString(endTimeString);   // => { hours, minutes }
+
+    let eventStartHour = start.hours;
+    let eventEndHour   = end.hours;
+
+    // 4) Calculate overlap in hours
+    //    Overlap is the intersection between [eventStartHour, eventEndHour] & [venueStartHour, venueEndHour]
+    //    We'll ignore minutes for simplicity or you can factor them in if desired.
+    //    If your events can cross midnight, you’ll need more advanced logic. 
+    //    But typically, the user picks a single date.
+
+    const overlapStart = Math.max(eventStartHour, venueStartHour);
+    const overlapEnd   = Math.min(eventEndHour, venueEndHour);
+    let overlapHours   = overlapEnd - overlapStart;
+
+    // If negative or zero => no overlap
+    if (overlapHours <= 0) {
+        return 0; 
+    }
+
+    // 5) If there is overlap
+    //    - Up to 4 hours => $1,000 (half-day)
+    //    - Over 4 hours  => $2,000 (full-day)
+    if (overlapHours <= 4) {
+        return 1000;
+    } else {
+        return 2000;
+    }
+}
+
+
+//Dart Garden Buyout Fee
+function handleMandatoryFee(feeID, cost, label = "Buyout Fee") {
+    // feeID is a short string like "venue-buyout-fee"
+    // cost is a number
+    // label is a user-friendly text to display
+
+    // If cost is zero, hide the line item if it exists
+    if (cost === 0) {
+        const existingLineItem = dom(feeID + "-line-item");
+        if (existingLineItem) {
+            existingLineItem.style.display = "none";
+        }
+        return;
+    }
+
+    // Otherwise, show or create it
+    addOrShowMandatoryFeeLineItem(feeID, cost, label);
+}
+
+function addOrShowMandatoryFeeLineItem(feeID, cost, label) {
+    // We’ll add this mandatory fee as part of the "services-summary" 
+    // just like we do with other services/options.
+
+    let lineItem    = dom(feeID + "-line-item");
+    let costDisplay = null;
+
+    if (lineItem) {
+        // The item already exists in the DOM, just show/update it
+        lineItem.style.display = "flex";
+        costDisplay = dom(feeID + "-cost-display");
+        costDisplay.innerHTML = "$" + cost;
+    } else {
+        // We need to create the line item
+        lineItem = document.createElement("div");
+        lineItem.id = feeID + "-line-item";
+        lineItem.classList.add("text-meta");
+        lineItem.style.display = "flex";
+        lineItem.style.justifyContent = "space-between";
+
+        // Create the label display
+        const labelDisplay = document.createElement("div");
+        labelDisplay.id = feeID + "-title-display";
+        labelDisplay.classList.add("text-meta");
+        labelDisplay.textContent = label;
+
+        // Create the cost display
+        costDisplay = document.createElement("h6");
+        costDisplay.id = feeID + "-cost-display";
+        costDisplay.classList.add("heading-h6");
+        costDisplay.innerHTML = "$" + cost;
+
+        // Append them into the line item
+        lineItem.appendChild(labelDisplay);
+        lineItem.appendChild(costDisplay);
+
+        // Finally, append to the summary container (same place where services go)
+        dom("services-summary").appendChild(lineItem);
+    }
+}
+
+
 
 
 

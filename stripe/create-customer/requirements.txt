@@ -1,0 +1,4 @@
+functions-framework==3.*
+stripe>=7.0.0
+requests
+pyairtable==2.3.3

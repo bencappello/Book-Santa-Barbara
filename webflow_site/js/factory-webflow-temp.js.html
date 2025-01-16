@@ -8,7 +8,8 @@ function dom(id) {
     return document.getElementById(id);
 };
 
-const calendarID = "thefactory@booksantabarbara.com"
+const calendarID = "c_18829vam0e7l8idrkgc1ti1j2n99k@resource.calendar.google.com"
+const form = dom("the-factory");
 
 //event info
 var eventNameInput = dom("event-name-input");
@@ -133,20 +134,20 @@ function calculateChange() {
   depositInput.value = calculateDeposit(totalCost);
 };
 
-eventNameInput.onchange = calculateChange;
-eventDateInput.onchange = calculateChange;
-startTimeInput.onchange = calculateChange;
-endTimeInput.onchange = calculateChange;
-guestsSlider.oninput = calculateChange;
-guestsSlider.onchange = calculateChange;
-guestsInput.onchange = calculateChange;
-noFoodInput.onchange = calculateChange;
-outsideCateringInput.onchange = calculateChange;
-dfjghdfg.onchange = calculateChange;
-foodBeverageInput.onchange = calculateChange;
-sonosInput.onchange = calculateChange;
-interestedEntertainmentInput.onchange = calculateChange;
-paWirelessInput.onchange = calculateChange;
+// eventNameInput.onchange = calculateChange;
+// eventDateInput.onchange = calculateChange;
+// startTimeInput.onchange = calculateChange;
+// endTimeInput.onchange = calculateChange;
+// guestsSlider.oninput = calculateChange;
+// guestsSlider.onchange = calculateChange;
+// guestsInput.onchange = calculateChange;
+// noFoodInput.onchange = calculateChange;
+// outsideCateringInput.onchange = calculateChange;
+// dfjghdfg.onchange = calculateChange;
+// foodBeverageInput.onchange = calculateChange;
+// sonosInput.onchange = calculateChange;
+// interestedEntertainmentInput.onchange = calculateChange;
+// paWirelessInput.onchange = calculateChange;
 
 function calculateDeposit(total) {
   return total * 0.2;

@@ -1,0 +1,109 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js" integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/timepicker@1.14.1/jquery.timepicker.min.js"></script>
+<script src='https://html2canvas.hertzen.com/dist/html2canvas.min.js'></script>
+<script src="https://cdn.jsdelivr.net/gh/bencappello/book-santa-barbara/js/pricingFunctions.js?"></script>
+<script>
+
+//------------------------------------STATIC CODE DO NOT EDIT ABOVE THIS LINE ----------------------------------------------------
+
+//Add the ID for the calendar for this vendor/venue
+const calendarID = "c_18811qkr86c7chdqnv31a17eo9g36@resource.calendar.google.com";
+
+//The name of the form ID as it appears in webflow
+const form = dom("dart-garden-form");
+
+//This is where you configure services and options. See below this for documentation of what you can put here.
+function services() {
+    return [
+        service({
+            'serviceName': 'venue',
+            'type': 'fixed',
+            'dayTiers': {
+                'mon': 3500,
+                'tue': 3500,
+                'wed': 3500,
+                'thu': 3500,
+                'fri': 3500,
+                'sat': 5000,
+                'sun': 5000
+            },
+            'options': [
+                option({
+                        'serviceName': 'venue',
+                        'optionName': 'additional-fee',
+                        'type': 'dart-garden-buyout-fee'
+                    })
+            ]
+        })
+    ]
+}
+
+
+//------------------------------------DO NOT EDIT BELOW THIS LINE - DOCUMENTATION ----------------------------------------------------
+
+
+//SERVICE/OPTION CONFIG DOCUMENTATION
+const servicePropertyOptions = {
+    //MANDATORY for all services and options. Make this equal to the ID of the checkbox for this service in webflow.
+    //This should ideally be all lower case connected with hyphens. In this documenation example it is called 'service-name'.
+    //In reality you would call this 'ceremony-sound' or 'kiva-courtyard' or something like that.
+    'serviceName': "service-name",
+
+     //MANDATORY for all OPTIONS only. Do not add this for a service. Make this equal to the ID of the checkbox for this option in webflow.
+     //This should ideally be all lower case connected with hyphens. In this documenation example it is called 'option-name'.
+     //In reality you would call this 'beach-ceremony' or 'additional-guitarist' or something like that.
+    'optionName': "option-name",
+
+    //MANDATORY for all services and options. This lists all the possible types you can put here.
+    //Per unit or per-two-units should be used for any service or option that has a specific slider associaited with it.
+    //This can be for units (E.g. headphones), time (E.g. hours or minutes), guests, etc.
+    //per-two-units would be for instance for a per person per hour service or option.
+    //The global options mean that it is related to the guest count, time, or both for the overall event.
+    'type': [
+        'no-cost',
+        'fixed',
+        'per-unit',
+        'per-two-units',
+        'global-time',
+        'global-guests',
+        'global-time-and-guests'
+    ],
+
+    //OPTIONAL for services or options. This should be present unless the service or option is 'no-cost' or if it involves 'guestTiers' or 'dayTiers'.
+    //In those cases you don't include this. In cases where the price is 'fixed' this is the fixed price.
+    //In cases where the cost scales with some unit (E.g. headphones, guests, time) this will be the per unit cost.
+    'cost': 0,
+
+    //OPTIONAL for services or options. If you include this you should not include the 'cost' attrubute above. This replaces that. This can be used regardless of whether the guest count is based on the global event guests or by an independent guest slider. You can put as many tiers as you want. The first nummber is the guest count, second number the price. The system will apply the given price for all guest counts less than or equal to the given guest count. Below is an example case. In that example guest counts 0 - 20 --> price $1000, guest counts 21 - 50 --> price $2000, guest counts 51 - 100 --> price $3000, guest counts over 100 --> price $4000. This is 200 is the highest guest count listed so for all guest counts above that the price is still $4000.
+    'guestTiers': {
+        20: 1000,
+        50: 2000,
+        100: 3000,
+        200: 4000
+    },
+
+    //OPTIONAL for services or options. If you include this you should not include the 'cost' attrubute above.
+    //This replaces that. This will respond to the day of week for the event as indicated by the customer when they choose the event date.
+    //You must list each day of the week here similar to the example below.
+    'dayTiers': {
+        'mon': 1000,
+        'tue': 1000,
+        'wed': 1000,
+        'thu': 1000,
+        'fri': 2000,
+        'sat': 3000,
+        'sun': 2500
+    },
+
+    //OPTIONAL for services or options that have a type of 'per-unit' or 'per-two-units'. Do not include this for any other type. This determines the step size for the related slider. So if the slider is for minutes and you want it to jump by 15 minute intervals you put 15 here. You do not put 15 in webflow. When you create the slider there you always list the 'step' attribute as 1. If you don't include this attribute here the default will always be 1.
+    'sliderStep': 1,
+
+    //OPTIONAL, only for services or options that have a type of 'per-two-units'. Same as 'sliderStep' above.
+    'sliderStep2': 1,
+
+    //OPTIONAL for services only. This is where you list each option related to the service.
+    'options': []
+}
+
+</script>
