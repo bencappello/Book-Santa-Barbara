@@ -205,8 +205,10 @@ function handleItem(config = {}) {
         return handleService(properties.serviceName, itemCost, 1, properties.options);
     } else if (properties.itemType == 'option') {
         if (properties.type == 'dart-garden-buyout-fee') {
+            console.log(properties.type)
             return handleMandatoryFee(properties.serviceName, properties.optionName, itemCost);
         } else {
+            console.log('handleOption route')
             return handleOption(properties.serviceName, properties.optionName, itemCost);
         }  
     } else {
