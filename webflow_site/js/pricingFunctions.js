@@ -205,10 +205,8 @@ function handleItem(config = {}) {
         return handleService(properties.serviceName, itemCost, 1, properties.options);
     } else if (properties.itemType == 'option') {
         if (properties.type == 'dart-garden-buyout-fee') {
-            console.log(properties.type)
             return handleMandatoryFee(properties.serviceName, properties.optionName, itemCost);
         } else {
-            console.log('handleOption route')
             return handleOption(properties.serviceName, properties.optionName, itemCost);
         }  
     } else {
@@ -273,8 +271,69 @@ function calculateDartGardenBuyoutFee() {
 }
 
 
+
+
+function handleMandatoryFee(serviceName, optionName, cost, dollarCost = true, showLineItem = true, summaryPrefix = false) {
+    var optionLineItem
+    var displayCost = cost;
+    
+    if (!summaryPrefix) { summaryPrefix = optionName }
+    if (dollarCost) { displayCost = "$" + displayCost };
+    optionLineItem = dom(serviceName + '-' + summaryPrefix + "-option-line-item");
+
+    if (cost > 0) {
+        addOrShowMandatoryFeeLineItem(serviceName, summaryPrefix, displayCost);
+
+        return cost;
+    } else {
+        if (optionLineItem) { optionLineItem.style.display = 'none' };
+
+        return 0;
+    }
+};
+
+function addOrShowMandatoryFeeLineItem(serviceName, optionName, displayCost) {
+    var serviceSection = dom(serviceName + "-service-section");
+    var optionLineItem = dom(serviceName + '-' + optionName + "-option-line-item");
+    var costDisplay = dom(serviceName + '-' + optionName + "-cost-display");
+
+    if (optionLineItem) {
+
+        optionLineItem.style.display = 'flex';
+        costDisplay.innerHTML = displayCost;
+    } else {
+        // Create option line item
+        optionLineItem = document.createElement('div');
+        optionLineItem.id = serviceName + '-' + optionName + '-option-line-item';
+        optionLineItem.classList.add('text-meta');
+        optionLineItem.style.display = 'flex';
+        optionLineItem.style.justifyContent = 'space-between'
+
+        // Create the selection display
+        var optionTitleDisplay = document.createElement('div');
+        optionTitleDisplay.id = serviceName + '-' + optionName + '-title-display';
+        optionTitleDisplay.classList.add('text-meta');
+        optionTitleDisplay.textContent = toTitleCase(optionName);
+
+        // Create the cost display
+        var costDisplay = document.createElement('h6');
+        costDisplay.id = serviceName + '-' + optionName + '-cost-display';
+        costDisplay.classList.add('heading-h6');
+        costDisplay.innerHTML = displayCost;
+        
+        optionLineItem.appendChild(optionTitleDisplay);
+        optionLineItem.appendChild(costDisplay);
+        serviceSection.appendChild(optionLineItem);
+    }
+}
+
+
+
+
+
+
 //Dart Garden Buyout Fee
-function handleMandatoryFee(feeID, cost, label = "Buyout Fee") {
+function handleMandatoryFee2(feeID, cost, label = "Buyout Fee") {
     // feeID is a short string like "venue-buyout-fee"
     // cost is a number
     // label is a user-friendly text to display
@@ -292,7 +351,7 @@ function handleMandatoryFee(feeID, cost, label = "Buyout Fee") {
     addOrShowMandatoryFeeLineItem(feeID, cost, label);
 }
 
-function addOrShowMandatoryFeeLineItem(feeID, cost, label) {
+function addOrShowMandatoryFeeLineItem2(feeID, cost, label) {
     // We’ll add this mandatory fee as part of the "services-summary" 
     // just like we do with other services/options.
 
