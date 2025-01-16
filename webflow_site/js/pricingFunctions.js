@@ -282,7 +282,7 @@ function handleMandatoryFee(serviceName, optionName, cost, dollarCost = true, sh
     if (dollarCost) { displayCost = "$" + displayCost };
     optionLineItem = dom(serviceName + '-' + summaryPrefix + "-option-line-item");
 
-    if (serviceSection &&cost > 0) {
+    if (serviceSection && cost > 0) {
         addOrShowMandatoryFeeLineItem(serviceName, summaryPrefix, displayCost);
 
         return cost;
@@ -327,75 +327,6 @@ function addOrShowMandatoryFeeLineItem(serviceName, optionName, displayCost) {
         serviceSection.appendChild(optionLineItem);
     }
 }
-
-
-
-
-
-
-//Dart Garden Buyout Fee
-function handleMandatoryFee2(feeID, cost, label = "Buyout Fee") {
-    // feeID is a short string like "venue-buyout-fee"
-    // cost is a number
-    // label is a user-friendly text to display
-
-    // If cost is zero, hide the line item if it exists
-    if (cost === 0) {
-        const existingLineItem = dom(feeID + "-line-item");
-        if (existingLineItem) {
-            existingLineItem.style.display = "none";
-        }
-        return;
-    }
-
-    // Otherwise, show or create it
-    addOrShowMandatoryFeeLineItem(feeID, cost, label);
-}
-
-function addOrShowMandatoryFeeLineItem2(feeID, cost, label) {
-    // We’ll add this mandatory fee as part of the "services-summary" 
-    // just like we do with other services/options.
-
-    let lineItem    = dom(feeID + "-line-item");
-    let costDisplay = null;
-
-    if (lineItem) {
-        // The item already exists in the DOM, just show/update it
-        lineItem.style.display = "flex";
-        costDisplay = dom(feeID + "-cost-display");
-        costDisplay.innerHTML = "$" + cost;
-    } else {
-        // We need to create the line item
-        lineItem = document.createElement("div");
-        lineItem.id = feeID + "-line-item";
-        lineItem.classList.add("text-meta");
-        lineItem.style.display = "flex";
-        lineItem.style.justifyContent = "space-between";
-
-        // Create the label display
-        const labelDisplay = document.createElement("div");
-        labelDisplay.id = feeID + "-title-display";
-        labelDisplay.classList.add("text-meta");
-        labelDisplay.textContent = label;
-
-        // Create the cost display
-        costDisplay = document.createElement("h6");
-        costDisplay.id = feeID + "-cost-display";
-        costDisplay.classList.add("heading-h6");
-        costDisplay.innerHTML = "$" + cost;
-
-        // Append them into the line item
-        lineItem.appendChild(labelDisplay);
-        lineItem.appendChild(costDisplay);
-
-        // Finally, append to the summary container (same place where services go)
-        dom("services-summary").appendChild(lineItem);
-    }
-}
-
-
-
-
 
 
 
