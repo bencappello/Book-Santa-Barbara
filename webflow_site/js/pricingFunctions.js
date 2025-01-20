@@ -502,7 +502,7 @@ window.onload = function() {
 
     calculateChange();
 
-    script.src = "https://cdn.jsdelivr.net/gh/bencappello/book-santa-barbara/js/dateTimePickers.js?";
+    script.src = "https://cdn.jsdelivr.net/gh/bencappello/book-santa-barbara/webflow_site/js/dateTimePickers.js?";
     script.onload = function() {
         console.log('Script loaded and executed');
     };
