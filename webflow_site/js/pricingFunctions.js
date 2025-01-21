@@ -405,7 +405,7 @@ function handleService(serviceName, baseCost, baseTime, optionCosts, addedTime =
         displayCost = baseCost;
     } else {
         cost = calculateServiceTotal(serviceName, baseCost, baseTime, optionCosts, addedTime)
-        displayCost = "$" + totalCost;
+        displayCost = "$" + cost;
     }
 
     if (properties.noCheckbox || checkbox.checked) {
