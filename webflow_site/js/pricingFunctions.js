@@ -146,7 +146,7 @@ function handleItem(config = {}) {
         let dayOfWeekNumber = eventDate.getDay();
         let dayName = numberToDay[dayOfWeekNumber];
 
-        if(eventDate) {
+        if(dom("event-date-input").value) {
             properties.cost = properties.dayTiers[dayName];
         } else {
             properties.cost = 'Choose date';
@@ -207,7 +207,7 @@ function handleItem(config = {}) {
     }
     
     if (properties.itemType == 'service') {
-        return handleService(properties.serviceName, itemCost, 1, properties.options);
+        return handleService(properties, itemCost, 1);
     } else if (properties.itemType == 'option') {
         if (properties.type == 'dart-garden-buyout-fee') {
             return handleMandatoryFee(properties.serviceName, properties.optionName, itemCost);
@@ -393,23 +393,25 @@ function addOrShowOption(serviceName, optionName, displayCost) {
 }
 
 //SERVICES 
-function handleService(serviceName, baseCost, baseTime, optionCosts, addedTime = 0) {
-    var checkbox = dom(serviceName);
-    var serviceSection = dom(serviceName + "-service-section");
-    var optionCheckboxes = dom(serviceName + "-options");
+function handleService(properties, baseCost, baseTime, addedTime = 0) {
+    var checkbox = dom(properties.serviceName);
+    var serviceSection = dom(properties.serviceName + "-service-section");
+    var optionCheckboxes = dom(properties.serviceName + "-options");
     var displayCost;
     var cost;
+
+    console.log(baseCost)
 
     if (typeof baseCost === 'string') {
         cost = 0;
         displayCost = baseCost;
     } else {
-        cost = calculateServiceTotal(serviceName, baseCost, baseTime, optionCosts, addedTime)
+        cost = calculateServiceTotal(properties.serviceName, baseCost, baseTime, properties.options, addedTime)
         displayCost = "$" + cost;
     }
 
     if (properties.noCheckbox || checkbox.checked) {
-        addOrShowService(serviceName, displayCost);
+        addOrShowService(properties.serviceName, displayCost);
         if(optionCheckboxes) { optionCheckboxes.style.display = 'block' };
 
         return cost;

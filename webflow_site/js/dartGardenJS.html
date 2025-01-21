@@ -2,7 +2,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js" integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/timepicker@1.14.1/jquery.timepicker.min.js"></script>
 <script src='https://html2canvas.hertzen.com/dist/html2canvas.min.js'></script>
-<script src="https://cdn.jsdelivr.net/gh/bencappello/book-santa-barbara/webflow_site/js/pricingFunctions.js"></script>
 <script>
 
 //------------------------------------STATIC CODE DO NOT EDIT ABOVE THIS LINE ----------------------------------------------------
@@ -25,16 +24,29 @@ function services() {
                 'tue': 3500,
                 'wed': 3500,
                 'thu': 3500,
-                'fri': 3500,
+                'fri': 5000,
                 'sat': 5000,
                 'sun': 5000
             },
             'options': [
                 option({
-                        'serviceName': 'space-rental',
-                        'optionName': 'space-buyout-fee',
-                        'type': 'dart-garden-buyout-fee'
-                    })
+                    'serviceName': 'space-rental',
+                    'optionName': 'no-buyout',
+                    'type': 'fixed',
+                    'cost': 0
+                }),
+                option({
+                    'serviceName': 'space-rental',
+                    'optionName': 'half-day-buyout',
+                    'type': 'fixed',
+                    'cost': 1000
+                }),
+                option({
+                    'serviceName': 'space-rental',
+                    'optionName': 'full-day-buyout',
+                    'type': 'fixed',
+                    'cost': 2000
+                })
             ]
         })
     ]
