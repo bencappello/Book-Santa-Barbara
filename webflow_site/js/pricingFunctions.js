@@ -118,6 +118,7 @@ function handleItem(config = {}) {
         'cost': 0,
         'guestTiers': false,
         'dayTiers': false,
+        'noCheckbox': false,
         'sliderStep': 1,
         'sliderStep2': 1,
         'options': []
@@ -144,8 +145,12 @@ function handleItem(config = {}) {
         let eventDate = new Date(Date.parse(dom("event-date-input").value));
         let dayOfWeekNumber = eventDate.getDay();
         let dayName = numberToDay[dayOfWeekNumber];
-        
-        properties.cost = properties.dayTiers[dayName];
+
+        if(eventDate) {
+            properties.cost = properties.dayTiers[dayName];
+        } else {
+            properties.cost = 'Choose date';
+        }
     }
 
     //Fixed cost
@@ -392,10 +397,19 @@ function handleService(serviceName, baseCost, baseTime, optionCosts, addedTime =
     var checkbox = dom(serviceName);
     var serviceSection = dom(serviceName + "-service-section");
     var optionCheckboxes = dom(serviceName + "-options");
-    var cost = calculateServiceTotal(serviceName, baseCost, baseTime, optionCosts, addedTime)
+    var displayCost;
+    var cost;
 
-    if (checkbox.checked) {
-        addOrShowService(serviceName, cost);
+    if (typeof baseCost === 'string') {
+        cost = 0;
+        displayCost = baseCost;
+    } else {
+        cost = calculateServiceTotal(serviceName, baseCost, baseTime, optionCosts, addedTime)
+        displayCost = "$" + totalCost;
+    }
+
+    if (properties.noCheckbox || checkbox.checked) {
+        addOrShowService(serviceName, displayCost);
         if(optionCheckboxes) { optionCheckboxes.style.display = 'block' };
 
         return cost;
@@ -407,14 +421,13 @@ function handleService(serviceName, baseCost, baseTime, optionCosts, addedTime =
     }
 };
 
-function addOrShowService(serviceName, totalCost) {
+function addOrShowService(serviceName, displayCost) {
     var serviceSection = dom(serviceName + "-service-section");
     var costDisplay = dom(serviceName + "-total-cost-display");
-    var formattedCost = "$" + totalCost;
 
     if (serviceSection) {
         serviceSection.style.display = 'block';
-        costDisplay.innerHTML = formattedCost;
+        costDisplay.innerHTML = displayCost;
     } else {
         //Create service section
         serviceSection = document.createElement("div");
@@ -438,7 +451,7 @@ function addOrShowService(serviceName, totalCost) {
         var costDisplay = document.createElement('h6');
         costDisplay.id = serviceName + '-total-cost-display';
         costDisplay.classList.add('heading-h6');
-        costDisplay.innerHTML = formattedCost;
+        costDisplay.innerHTML = displayCost;
 
         serviceLineItem.appendChild(serviceHeading);
         serviceLineItem.appendChild(costDisplay);
